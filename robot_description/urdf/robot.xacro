@@ -2,7 +2,7 @@
 <robot name="crx10ial" xmlns:xacro="http://wiki.ros.org/xacro">
   
   <!-- Arguments-->
-  <xacro:arg name="sim" default="true"/>
+  <xacro:arg name="sim" default="false"/> <!-- Default left at false for MoveIt, needs fixing-->
 
   <!-- Utils -->
   <xacro:include filename="$(find robot_description)/urdf/utils.xacro" />
