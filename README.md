@@ -23,12 +23,12 @@ $ ros2 launch robot_description view_robot.launch.py
 ```
 ### MoveIt motion planner
 ```console
-$ ros2 launch robot_moveit_config demo.launch.py
+$ ros2 launch robot_bringup moveit.launch.py
 ```
 ### Displaying model in Gazebo (no control yet)
 ```console
-$ ros2 launch robot_bringup simulation.launch.py
+$ ros2 launch robot_bringup gazebo.launch.py
 ```
 
 ## Known bugs
-* Conflict between simulation_interface and MoveIt causes MoveIt to fail
+* Conflict between controllers of Gazebo and MoveIt
