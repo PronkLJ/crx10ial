@@ -7,16 +7,15 @@ from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
-robot = 'robot'
 world = 'empty_world'
 
 def generate_launch_description():
 
     # Robot model
-    xacro_file = os.path.join(get_package_share_directory(robot+'_description'), 'urdf', 'robot.xacro')
+    xacro_file = os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')
 
     # Gazebo world
-    world_file = os.path.join(get_package_share_directory(robot+'_description'), 'world', world+'.sdf')
+    world_file = os.path.join(get_package_share_directory('robot_description'), 'world', world+'.sdf')
 
     # Start Gazebo
     gazebo_launch_file = os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
