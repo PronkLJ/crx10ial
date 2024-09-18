@@ -30,5 +30,10 @@ $ ros2 launch robot_bringup moveit.launch.py
 $ ros2 launch robot_bringup gazebo.launch.py
 ```
 
+## To-do
+* Clean up MoveIt launch file
+* Make MoveIt and Gazebo use the same controllers
+* Remove the need for robot_moveit_config package
+
 ## Known bugs
 * Conflict between controllers of Gazebo and MoveIt
