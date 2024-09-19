@@ -63,23 +63,6 @@ def generate_launch_description():
         ]
     )
 
-    ## Spawn controller nodes
-    controller_nodes = []
-    ### Get controller names from the MoveIt configuration
-    controller_names = moveit_config.trajectory_execution.get("moveit_simple_controller_manager", {}).get("controller_names", [])
-
-    ### Loop through controller names and add Nodes to spawn them
-
-    for controller in controller_names + ["joint_state_broadcaster"]:
-        controller_nodes.append(
-            Node(
-                package="controller_manager",
-                executable="spawner",
-                arguments=[controller],
-                output="screen",
-            )
-        )
-
     # Launch
     ## Virtual joints
     virtual_joints_launch = os.path.join(get_package_share_directory("robot_moveit_config"), "launch", "static_virtual_joint_tfs.launch.py")
@@ -103,6 +86,12 @@ def generate_launch_description():
             condition=IfCondition(LaunchConfiguration("db")),
     )
 
+    ## Include the controller spawner launch file
+    spawn_controllers = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory("robot_moveit_config"), "launch", "spawn_controllers.launch.py"))
+    )
+
 
             
     return LaunchDescription([
@@ -115,10 +104,10 @@ def generate_launch_description():
         control_node,
         robot_state_publisher,
         rviz_node,
-        *controller_nodes,
 
         # Launch
         virtual_joints,
         move_group,
         warehouse_db,
+        spawn_controllers,
     ])
