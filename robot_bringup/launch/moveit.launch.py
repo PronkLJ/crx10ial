@@ -21,7 +21,7 @@ def generate_launch_description():
     ## Initialize MoveItConfigsBuilder to load robot description
     moveit_config = MoveItConfigsBuilder(robot_name="crx10ial", package_name="robot_moveit_config").to_moveit_configs()
     ## Rviz configuration file for MoveIt
-    rviz_config_file = os.path.join(get_package_share_directory("robot_control"), "config", "moveit.rviz")
+    rviz_config_file = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "moveit.rviz")
 
     # Launch arguments
     db = DeclareBooleanLaunchArg("db", default_value=False, description="By default, we do not start a database (it can be large)")
@@ -34,7 +34,7 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[
             moveit_config.robot_description,
-            os.path.join(get_package_share_directory("robot_control"), "config", "controller_params.yaml")
+            os.path.join(get_package_share_directory("robot_moveit_config"), "config", "controller_params.yaml")
         ],
     )
     ## Robot State Publisher Node

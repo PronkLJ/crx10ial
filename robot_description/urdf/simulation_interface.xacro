@@ -79,7 +79,7 @@
     <gazebo>
         <!-- ros2_control -->
         <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-            <parameters>$(find robot_control)/config/controller_params.yaml</parameters>
+            <parameters>$(find robot_moveit_config)/config/controller_params.yaml</parameters>
         </plugin>
 
         <!-- IMU -->
