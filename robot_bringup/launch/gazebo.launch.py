@@ -29,9 +29,7 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name="robot_state_publisher",
-        parameters=[{
-            'robot_description': ParameterValue(Command(['xacro ', xacro_file, ' sim:=True']), value_type=str)
-        }],
+        parameters=[{'robot_description': xacro_file}],
         emulate_tty=True
     )
 
@@ -41,6 +39,20 @@ def generate_launch_description():
         executable='create',
         arguments=['-name', 'cobot', '-topic', 'robot_description', '-x', '0.0', '-y', '0.0', '-z', '0.0'],
         output='screen',
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output="screen",
+    )
+
+    joint_trajectory_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_trajectory_controller"],
+        output="screen",
     )
 
     # Bridge topics from Gazebo to ROS2 Node
@@ -60,6 +72,8 @@ def generate_launch_description():
         # Nodes
         robot_state_publisher,
         spawn_sim_robot,
+        joint_state_broadcaster_spawner,
+        joint_trajectory_controller_spawner,
         gz_bridge_node,
     ])
     

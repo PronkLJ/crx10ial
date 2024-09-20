@@ -82,6 +82,10 @@
             <parameters>$(find robot_moveit_config)/config/controller_params.yaml</parameters>
         </plugin>
 
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+
         <!-- IMU -->
         <plugin filename="libignition-gazebo-imu-system.so" name="ignition::gazebo::systems::Imu"/>
 

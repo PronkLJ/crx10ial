@@ -46,6 +46,7 @@ def generate_launch_description():
         output="screen",
         parameters=[{
             'robot_description': ParameterValue(Command(['xacro ', xacro_file, ' sim:=True']), value_type=str)
+            
         }],
         emulate_tty=True
     )
