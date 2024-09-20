@@ -37,4 +37,4 @@ $ ros2 launch robot_bringup test.launch.py
 ```
 
 ## To-do
-* Bridge positions between MoveIt and Gazeb
+* Bridge positions between MoveIt and Gazebo
