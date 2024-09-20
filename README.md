@@ -29,8 +29,10 @@ $ ros2 launch robot_bringup moveit.launch.py
 $ ros2 launch robot_bringup gazebo.launch.py
 ```
 
-## To-do
-* Make MoveIt and Gazebo use the same controllers
+### Launch MoveIt and Gazebo
+```console
+$ ros2 launch robot_bringup test.launch.py
+```
 
-## Known bugs
-* Conflict between controllers of Gazebo and MoveIt
+## To-do
+* Bridge positions between MoveIt and Gazeb
