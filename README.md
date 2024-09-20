@@ -1,4 +1,6 @@
 # Fanuc CRX10iA/L packages for ROS2 simulation
+The goal of these packages is to plan and execute paths in MoveIt 2, then displaying these movements in Gazebo Sim.
+
 Tested in ROS2 Humble Hawksbill.
 
 ## Content

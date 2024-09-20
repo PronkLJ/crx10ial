@@ -15,18 +15,23 @@ world = 'empty_world'
 
 def generate_launch_description():
     
-    # Robot model
+    # Locate files
+    ## Robot model
     xacro_file = os.path.join(get_package_share_directory("robot_description"), "urdf", "robot.xacro")
-    # Gazebo world
+    ## Gazebo world
     world_file = os.path.join(get_package_share_directory('robot_description'), 'world', world+'.sdf')
-    # Gazebo launch location
+    ## Gazebo launch location
     gazebo_launch_file = os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
+    ## Rviz configuration file for MoveIt
+    rviz_config_file = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "moveit.rviz")
+    ## Controller file
+    controller_file = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "controller_params.yaml")
+
 
     # Configurations
     ## Initialize MoveItConfigsBuilder to load robot description
     moveit_config = MoveItConfigsBuilder(robot_name="crx10ial", package_name="robot_moveit_config").to_moveit_configs()
-    ## Rviz configuration file for MoveIt
-    rviz_config_file = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "moveit.rviz")
+
 
     # Launch arguments
     db = DeclareBooleanLaunchArg("db", default_value=False, description="By default, we do not start a database (it can be large)")
@@ -38,10 +43,29 @@ def generate_launch_description():
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[
+            {"robot_description": xacro_file},
             moveit_config.robot_description,
-            os.path.join(get_package_share_directory("robot_moveit_config"), "config", "controller_params.yaml")
+            controller_file
         ],
+        output="screen"
     )
+
+    ## Joint State Broadcaster Spawner
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output="screen"
+    )
+
+    ## Robot Controller Spawner
+    robot_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["manipulator_controller"],  # The name of the controller defined in YAML
+        output="screen"
+    )
+
     ## Robot State Publisher Node
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -50,11 +74,12 @@ def generate_launch_description():
         respawn=True,
         output="screen",
         parameters=[{
-            'robot_description': ParameterValue(Command(['xacro ', xacro_file, ' sim:=True']), value_type=str)
+            'robot_description': ParameterValue(Command(['xacro ', xacro_file]), value_type=str)
             
         }],
         emulate_tty=True
     )
+
     ## RViz Node
     rviz_node = Node(
         package="rviz2",
@@ -100,12 +125,6 @@ def generate_launch_description():
             condition=IfCondition(LaunchConfiguration("db")),
     )
 
-    ## Include the controller spawner launch file
-    spawn_controllers = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory("robot_moveit_config"), "launch", "spawn_controllers.launch.py"))
-    )
-
     ## Start Gazebo
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([gazebo_launch_file]),
@@ -119,6 +138,15 @@ def generate_launch_description():
         arguments=[
             '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
             '/imu/data@sensor_msgs/msg/Imu[ignition.msgs.IMU'
+            '/joint_states@sensor_msgs/JointState@ign.msgs.Model'
+            #'/joint_states@sensor_msgs/JointState@/world/empty_world/model/cobot/joint_state]'
+            #'/joint_states@sensor_msgs/msg/JointState[ignition.msgs.Model',
+            #'/joint_states@gz.msgs.JointState]ignition.msgs.Model',
+            #'/manipulator_controller/state@your_custom_msg_type',
+            
+
+            #'/cobot/position_trajectory_controller/command@trajectory_msgs/msg/JointTrajectory[ignition.msgs.JointTrajectory',
+            #'/cobot/position_trajectory_controller/state@control_msgs/msg/JointTrajectoryControllerState[ignition.msgs.Model',
         ],
         output='screen',
     )
@@ -135,11 +163,12 @@ def generate_launch_description():
         rviz_node,
         spawn_sim_robot,
         gz_bridge_node,
+        joint_state_broadcaster_spawner,
+        robot_controller_spawner,
 
         # Launch
-        virtual_joints,
+        #virtual_joints, #Not sure if needed?
         move_group,
-        warehouse_db,
-        spawn_controllers,
+        #warehouse_db,
         gazebo,
     ])

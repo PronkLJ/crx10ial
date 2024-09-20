@@ -10,9 +10,6 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
       state_publish_rate: 50
 
-
-
-
     forward_position_controller:
       type: position_controllers/JointGroupPositionController
 
@@ -43,5 +40,3 @@ forward_position_controller:
       - J4
       - J5
       - J6
-
-#Aanvullen met andere controller_params.yaml files van de CRX
