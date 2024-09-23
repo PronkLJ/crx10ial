@@ -2,6 +2,8 @@ import os
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, ExecuteProcess, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
+from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 import xacro
@@ -12,15 +14,29 @@ def generate_launch_description():
     xacro_file = os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')
 
     # Start Gazebo
-    gazebo_launch_file = os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')
     gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([gazebo_launch_file]),
+        PythonLaunchDescriptionSource(
+            [PathJoinSubstitution([FindPackageShare("gazebo_ros"), "launch", "gazebo.launch.py"])]
+        ),
+        launch_arguments={"verbose": "false"}.items(),
     )
 
-    # Process xacro 
-    doc = xacro.parse(open(xacro_file))
-    xacro.process_doc(doc)
-    params = {'robot_description': doc.toxml()}
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [FindPackageShare("robot_description"), "urdf", "robot.xacro"]
+            ),
+            " ",
+            "use_gazebo_classic:=true",
+        ]
+
+    )    
+    robot_description = {"robot_description": robot_description_content}
+    rviz_config_file = PathJoinSubstitution(
+        [FindPackageShare("robot_moveit_config"), "config", "moveit.rviz"]
+    )
 
     # Robot State Publisher Node
     robot_state_publisher = Node(
@@ -28,9 +44,37 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name="robot_state_publisher",
         output="screen",
-        parameters=[params],
+        parameters=[robot_description],
     )
 
+    # Spawn Gazebo Model Node
+    spawn_entity = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=['-topic', '/robot_description', '-entity', 'cobot'],
+        output='screen',
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
+    )
+
+    robot_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["forward_position_controller", "--controller-manager", "/controller_manager"],
+    )
+
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        output="log",
+        arguments=["-d", rviz_config_file],
+    )    
+    
     # Node to start controller_manager
     controller_manager = Node(
         package='controller_manager',
@@ -77,14 +121,6 @@ def generate_launch_description():
         )]
     )
 
-    # Spawn Gazebo Model Node
-    spawn_entity = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=['-topic', '/robot_description', '-entity', 'cobot'],
-        output='screen',
-    )
-
     return LaunchDescription([
         gazebo,
         robot_state_publisher,
@@ -95,3 +131,6 @@ def generate_launch_description():
         activate_joint_state_controller,
         activate_manipulator_controller,
     ])
+
+
+
