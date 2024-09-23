@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="crx10ial" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
     <!-- Simulation ros2_control interface -->
     <ros2_control name="GazeboSystem" type="system">
         <hardware>

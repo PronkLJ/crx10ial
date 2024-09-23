@@ -11,6 +11,7 @@ from moveit_configs_utils import MoveItConfigsBuilder
 from moveit_configs_utils.launch_utils import DeclareBooleanLaunchArg
 from srdfdom.srdf import SRDF
 
+# NOT FUNCTIONING
 
 def generate_launch_description():
     

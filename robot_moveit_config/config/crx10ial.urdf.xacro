@@ -3,6 +3,6 @@
     <!-- Import crx10ial urdf file -->
     <xacro:include filename="$(find robot_description)/urdf/robot.xacro" />
 
-    <xacro:crx10ial_ros2_control name="GazeboSystem" initial_positions_file="$(arg initial_positions_file)"/>
+    <!-- <xacro:crx10ial_ros2_control name="GazeboSystem" initial_positions_file="$(arg initial_positions_file)"/> -->
 
 </robot>
