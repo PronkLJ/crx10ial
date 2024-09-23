@@ -7,8 +7,8 @@
   <!-- Robot model-->
   <xacro:include filename="$(find robot_description)/urdf/robot.urdf.xacro"/>
 
-  <!-- Simulation interface, located in MoveIt package-->
-  <xacro:include filename = "$(find robot_description)/urdf/simulation_interface.xacro" />
+  <!-- Simulation interface -->
+  <xacro:include filename="$(find robot_description)/urdf/simulation_interface.xacro" />
 
   <xacro:crx10ial/>
 
