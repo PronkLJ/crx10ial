@@ -17,6 +17,15 @@ def generate_launch_description():
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)
 
+    # Load the SRDF file
+    srdf_file = os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'crx10ial.srdf')
+    with open(srdf_file, 'r') as f:
+        srdf_content = f.read()
+    
+    # Rviz configuration file for MoveIt
+    rviz_config_file = os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'config.rviz')
+
+
     # Start Gazebo
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -60,10 +69,24 @@ def generate_launch_description():
         output='screen',
     )
 
+        ## RViz Node
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        respawn=False,
+        output="log",
+        arguments=["-d", rviz_config_file],
+        parameters=[
+            {'robot_description_semantic': srdf_content},  # Add the SRDF parameter here
+        ]
+    )
+
     return LaunchDescription([
         gazebo,
         robot_state_publisher,
         spawn_entity,
         load_joint_state_controller,
         load_manipulator_controller,
+        rviz_node,
     ])

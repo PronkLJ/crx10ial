@@ -9,7 +9,7 @@ from launch_ros.parameter_descriptions import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 from moveit_configs_utils.launch_utils import DeclareBooleanLaunchArg
-from srdfdom.srdf import SRDF
+import xacro
 
 # NOT FUNCTIONING
 
@@ -17,16 +17,21 @@ def generate_launch_description():
     
     # Robot model
     xacro_file = os.path.join(get_package_share_directory("robot_description"), "urdf", "robot.xacro")
+    # Process xacro 
+    doc = xacro.parse(open(xacro_file))
+    xacro.process_doc(doc)
+
+    # Load the SRDF file
+    srdf_file = os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'crx10ial.srdf')
+    with open(srdf_file, 'r') as f:
+        srdf_content = f.read()
+
     
     # Configurations
     ## Initialize MoveItConfigsBuilder to load robot description
     moveit_config = MoveItConfigsBuilder(robot_name="crx10ial", package_name="robot_moveit_config").to_moveit_configs()
     ## Rviz configuration file for MoveIt
     rviz_config_file = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "moveit.rviz")
-
-    # Launch arguments
-    db = DeclareBooleanLaunchArg("db", default_value=False, description="By default, we do not start a database (it can be large)")
-    debug = DeclareBooleanLaunchArg("debug", default_value=False, description="By default, we are not in debug mode")
 
     # Nodes
     ## Control Node
@@ -35,22 +40,21 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[
             moveit_config.robot_description,
-            os.path.join(get_package_share_directory("robot_moveit_config"), "config", "controller_params.yaml")
+            os.path.join(get_package_share_directory("robot_moveit_config"), "config", "ros2_controllers.yaml")
         ],
     )
-    ## Robot State Publisher Node
+    # Robot State Publisher Node
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name="robot_state_publisher",
-        respawn=True,
         output="screen",
-        parameters=[{
-            'robot_description': ParameterValue(Command(['xacro ', xacro_file, ' sim:=True']), value_type=str)
-            
-        }],
-        emulate_tty=True
+        parameters=[{'robot_description': doc.toxml(),
+                     'robot_description_semantic': srdf_content,  # Ensure SRDF is passed here as well
+                     'use_sim_time': True,
+                     }],
     )
+
     ## RViz Node
     rviz_node = Node(
         package="rviz2",
@@ -81,27 +85,26 @@ def generate_launch_description():
             os.path.join(get_package_share_directory("robot_moveit_config"), "launch", "move_group.launch.py"))
     )
 
-    ## If database loading is enabled, start the database
-    warehouse_db = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory("robot_moveit_config"), "launch", "warehouse_db.launch.py")),
-            condition=IfCondition(LaunchConfiguration("db")),
+    # Load the joint state controller
+    load_joint_state_controller = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['joint_state_broadcaster'],
+        output='screen',
     )
 
-    ## Include the controller spawner launch file
-    spawn_controllers = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory("robot_moveit_config"), "launch", "spawn_controllers.launch.py"))
+    # Load the manipulator controller
+    load_manipulator_controller = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['manipulator_controller'],
+        output='screen',
     )
 
 
             
     return LaunchDescription([
 
-        # Add launch arguments
-        db,
-        debug,
-        
         # Nodes
         control_node,
         robot_state_publisher,
@@ -110,6 +113,6 @@ def generate_launch_description():
         # Launch
         virtual_joints,
         move_group,
-        warehouse_db,
-        spawn_controllers,
+        load_joint_state_controller,
+        load_manipulator_controller,
     ])
