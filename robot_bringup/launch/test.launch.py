@@ -38,7 +38,7 @@ def generate_launch_description():
         name="robot_state_publisher",
         output="screen",
         parameters=[{'robot_description': doc.toxml(),
-                     #'use_sim_time': True,
+                     'use_sim_time': True,
                      }],
     )
 
@@ -70,7 +70,7 @@ def generate_launch_description():
     moveit_config=(
         MoveItConfigsBuilder("robot")
         .robot_description(xacro_file)
-        .trajectory_execution(file_path="config/ros2_controllers.yaml")
+        .trajectory_execution(file_path="config/controllers.yaml")
         .robot_description_kinematics(file_path="config/kinematics.yaml")
         .planning_scene_monitor(
             publish_robot_description=True, publish_robot_description_semantic=True
@@ -83,7 +83,12 @@ def generate_launch_description():
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
-        parameters=[moveit_config.to_dict()]
+        parameters=[
+            moveit_config.to_dict(),
+            {"moveit_simple_controller_manager": 
+             os.path.join(get_package_share_directory('robot_moveit_config'),'config','controllers.yaml')},
+            {'use_sim_time': True},        
+        ],
     )
 
     ## RViz Node
@@ -97,6 +102,7 @@ def generate_launch_description():
             moveit_config.robot_description,
             moveit_config.robot_description_semantic,
             moveit_config.robot_description_kinematics,
+            {'use_sim_time': True} 
         ],
     )
 
@@ -105,7 +111,7 @@ def generate_launch_description():
         executable="static_transform_publisher",
         name="static_transform_publisher",
         output="log",
-        #arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
     )
 
     return LaunchDescription([
