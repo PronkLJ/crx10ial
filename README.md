@@ -24,14 +24,14 @@ $ ros2 launch robot_description view_robot.launch.py
 ```
 ### MoveIt motion planner
 ```console
-$ ros2 launch robot_bringup moveit.launch.py
+$ ros2 launch robot_moveit_config demo.launch.py
 ```
 ### Displaying model in Gazebo (no control yet)
 ```console
 $ ros2 launch robot_bringup gazebo_classic.launch.py
 ```
 
-### Launch MoveIt and Gazebo
+### Launch MoveIt and Gazebo (work in progress)
 ```console
 $ ros2 launch robot_bringup test.launch.py
 ```
