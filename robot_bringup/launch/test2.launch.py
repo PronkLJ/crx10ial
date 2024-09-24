@@ -114,8 +114,24 @@ def generate_launch_description():
         spawn_entity,
         load_joint_state_controller,
         load_manipulator_controller,
-        rviz_node,
-        static_tf,
-        run_move_group_node,
+    
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[rviz_node],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=rviz_node,
+                on_exit=[static_tf],
+            )
+        ),       
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=rviz_node,
+                on_exit=[run_move_group_node],
+            )
+        ),     
     
     ])

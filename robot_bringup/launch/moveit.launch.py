@@ -100,8 +100,6 @@ def generate_launch_description():
         arguments=['manipulator_controller'],
         output='screen',
     )
-
-
             
     return LaunchDescription([
 

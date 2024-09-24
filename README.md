@@ -35,3 +35,6 @@ $ ros2 launch robot_bringup gazebo_classic.launch.py
 ```console
 $ ros2 launch robot_bringup test.launch.py
 ```
+```console
+$ ros2 launch robot_bringup test2.launch.py
+```
