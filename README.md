@@ -28,7 +28,7 @@ $ ros2 launch robot_bringup moveit.launch.py
 ```
 ### Displaying model in Gazebo (no control yet)
 ```console
-$ ros2 launch robot_bringup gazebo.launch.py
+$ ros2 launch robot_bringup gazebo_classic.launch.py
 ```
 
 ### Launch MoveIt and Gazebo

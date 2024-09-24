@@ -33,7 +33,7 @@
 
         <joint name="J3">
             <command_interface name="position">
-                <param name="min">{pi}</param>
+                <param name="min">{-1* pi}</param>
                 <param name="max">{pi}</param>
             </command_interface>               
             <state_interface name="position">
@@ -82,7 +82,6 @@
 
     <!-- Gazebo plugins -->
     <gazebo>
-        <!-- ros2_control -->
         <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
             <parameters>$(find robot_moveit_config)/config/ros2_controllers.yaml</parameters>
         </plugin>

@@ -49,8 +49,7 @@ def generate_launch_description():
     )
 
     robot_description = {"robot_description": robot_description_content}    
-    #rviz_config_file = PathJoinSubstitution([FindPackageShare(description_package), "config", "config.rviz"])
-    rviz_config_file = os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'config.rviz')
+    rviz_config_file = PathJoinSubstitution([FindPackageShare(description_package), "config.rviz"])
 
     joint_state_publisher_node = Node(
         package="joint_state_publisher_gui",
