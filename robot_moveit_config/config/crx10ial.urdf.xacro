@@ -6,7 +6,7 @@
     <xacro:include filename="$(find robot_description)/urdf/robot.xacro" />
 
     <!-- Import control_xacro -->
-    <xacro:include filename="crx10ial.ros2_control2.xacro" />
+    <xacro:include filename="crx10ial.ros2_control.xacro" />
 
     <xacro:crx10ial_ros2_control name="GazeboSystem" initial_positions_file="$(arg initial_positions_file)"/> <!-- Was FakeSystem -->
 

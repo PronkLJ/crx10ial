@@ -1,15 +1,11 @@
 import os
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, ExecuteProcess, DeclareLaunchArgument
-from launch.conditions import IfCondition, UnlessCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command, LaunchConfiguration
+from launch.actions import IncludeLaunchDescription, RegisterEventHandler, TimerAction
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-from launch_ros.parameter_descriptions import ParameterValue
+from launch.event_handlers import OnProcessExit
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
-from moveit_configs_utils.launch_utils import DeclareBooleanLaunchArg
-import xacro
 
 def generate_launch_description():
 
@@ -17,8 +13,9 @@ def generate_launch_description():
     moveit_config=(
         MoveItConfigsBuilder("robot")
         .robot_description(file_path="config/crx10ial.urdf.xacro")
-        .trajectory_execution(file_path="config/ros2_controllers.yaml")
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
         .robot_description_kinematics(file_path="config/kinematics.yaml")
+        .joint_limits(file_path="config/joint_limits.yaml")
         .planning_scene_monitor(
             publish_robot_description=True, publish_robot_description_semantic=True
         )
@@ -26,7 +23,7 @@ def generate_launch_description():
     )
     
     # Start the actual move group node
-    run_move_group_node = Node(
+    move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
@@ -52,7 +49,7 @@ def generate_launch_description():
         executable="static_transform_publisher",
         name="static_transform_publisher",
         output="log",
-        #arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
     )
 
     # Robot State Publisher Node
@@ -71,27 +68,35 @@ def generate_launch_description():
         parameters=[moveit_config.robot_description, ros2_controllers_path],
         output="both",
     )
-    
-    load_controllers = []
-    for controller in [
-        "manipulator_controller",
-        "joint_state_broadcaster",
-    ]:
-        load_controllers += [
-            ExecuteProcess(
-                cmd=["ros2 run controller_manager spawner {}".format(controller)],
-                shell=True,
-                output="screen",
-            )
-        ]
+
+    joint_state_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output="screen",
+    )
+
+    manipulator_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["manipulator_controller"],
+        output="screen",
+    )
 
     return LaunchDescription(
         [
             rviz_node,
             static_tf,
             robot_state_publisher,
-            run_move_group_node,
             ros2_control_node,
+            joint_state_controller,
+            manipulator_controller,
+
+            RegisterEventHandler(
+                OnProcessExit(
+                    target_action=joint_state_controller,
+                    on_exit=[move_group_node]
+                )
+            )
         ]
-        + load_controllers,
     )
