@@ -17,7 +17,13 @@ $ cd src
 $ git clone https://github.com/PronkLJ/crx10ial
 ```
 
-## Launch files
+## Main Launch File
+### Launch Gazebo (Classic) and MoveIt2
+```console
+$ ros2 launch robot_bringup simulation.launch.py
+```
+
+## Other Launch files
 ### RViz with manual control of the joints
 ```console
 $ ros2 launch robot_description view_robot.launch.py
@@ -31,7 +37,3 @@ $ ros2 launch robot_bringup moveit.launch.py
 $ ros2 launch robot_bringup gazebo_classic.launch.py
 ```
 
-### Launch MoveIt and Gazebo
-```console
-$ ros2 launch robot_bringup simulation.launch.py
-```
