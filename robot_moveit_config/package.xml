@@ -3,11 +3,8 @@
 <package format="3">
   <name>robot_moveit_config</name>
   <version>1.0.0</version>
-  <description>
-     An automatically generated (and later edited) package with all the configuration and launch files for using the crx10ial with the MoveIt Motion Planning Framework
-  </description>
+  <description>An automatically generated (and later edited) package with all the configuration files for using the MoveIt Motion Planning Framework</description>
   <maintainer email="l.j.pronk@utwente.nl">Lucas Pronk</maintainer>
-
   <license>BSD</license>
 
   <url type="website">http://moveit.ros.org/</url>
@@ -17,30 +14,6 @@
   <author email="l.j.pronk@utwente.nl">Lucas Pronk</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-
-  <exec_depend>moveit_ros_move_group</exec_depend>
-  <exec_depend>moveit_kinematics</exec_depend>
-  <exec_depend>moveit_planners</exec_depend>
-  <exec_depend>moveit_simple_controller_manager</exec_depend>
-  <exec_depend>joint_state_publisher</exec_depend>
-  <exec_depend>joint_state_publisher_gui</exec_depend>
-  <exec_depend>tf2_ros</exec_depend>
-  <exec_depend>xacro</exec_depend>
-  <exec_depend>controller_manager</exec_depend>
-  <exec_depend>moveit_configs_utils</exec_depend>
-  <exec_depend>moveit_ros_move_group</exec_depend>
-  <exec_depend>moveit_ros_visualization</exec_depend>
-  <exec_depend>moveit_ros_warehouse</exec_depend>
-  <exec_depend>moveit_setup_assistant</exec_depend>
-  <exec_depend>robot_description</exec_depend>
-  <exec_depend>robot_state_publisher</exec_depend>
-  <exec_depend>rviz2</exec_depend>
-  <exec_depend>rviz_common</exec_depend>
-  <exec_depend>rviz_default_plugins</exec_depend>
-  <exec_depend>tf2_ros</exec_depend>
-  <exec_depend>warehouse_ros_mongo</exec_depend>
-  <exec_depend>xacro</exec_depend>
-
 
   <export>
       <build_type>ament_cmake</build_type>
