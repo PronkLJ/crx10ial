@@ -20,7 +20,7 @@ $ git clone https://github.com/PronkLJ/crx10ial
 ## Main Launch File
 ### Launch Gazebo (Classic) and MoveIt2
 ```console
-$ ros2 launch robot_bringup simulation.launch.py
+ros2 launch robot_bringup simulation.launch.py
 ```
 
 ## Other Launch files
