@@ -1,13 +1,18 @@
 <?xml version="1.0"?>
 <robot name="crx10ial" xmlns:xacro="http://wiki.ros.org/xacro">
-  
+
   <!-- Utils -->
   <xacro:include filename="$(find robot_description)/urdf/utils.xacro" />
 
   <!-- Robot model-->
   <xacro:include filename="$(find robot_description)/urdf/robot.urdf.xacro"/>
 
-  <!-- <xacro:include filename="$(find robot_description)/urdf/simulation_interface.xacro"/> -->
+  <!-- If Gazebo and/or MoveIt are started -->
+  <xacro:include filename="$(find robot_description)/urdf/simulation_interface.xacro"/>
+
+  <!-- If only MoveIt is started -->
+  <!-- <xacro:include filename="$(find robot_control)/config/crx10ial.ros2_control.xacro" />
+  <xacro:crx10ial_ros2_control name="FakeSystem" initial_positions_file="$(find robot_control)/config/initial_positions.yaml"/> -->
 
   <xacro:crx10ial/>
 
