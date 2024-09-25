@@ -12,9 +12,9 @@ def generate_launch_description():
     moveit_config=(
         MoveItConfigsBuilder("robot")
         .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'))
-        .trajectory_execution(os.path.join(get_package_share_directory('robot_control'), 'config', 'moveit_controllers.yaml'))
-        .robot_description_kinematics(os.path.join(get_package_share_directory('robot_control'), 'config', 'kinematics.yaml'))
-        .joint_limits(os.path.join(get_package_share_directory('robot_control'), 'config', 'joint_limits.yaml'))
+        .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))
+        .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
+        .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
         .planning_scene_monitor(
             publish_robot_description=True, publish_robot_description_semantic=True
         )
@@ -35,7 +35,7 @@ def generate_launch_description():
         executable="rviz2",
         name="rviz2",
         output="log",
-        arguments=["-d", os.path.join(get_package_share_directory('robot_control'), 'config', 'moveit.rviz')],
+        arguments=["-d", os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit.rviz')],
         parameters=[
             moveit_config.robot_description,
             moveit_config.robot_description_semantic,
@@ -60,7 +60,7 @@ def generate_launch_description():
         parameters=[moveit_config.robot_description],
     )
 
-    ros2_controllers_path = os.path.join(get_package_share_directory("robot_control"), "config", "ros2_controllers.yaml")
+    ros2_controllers_path = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "ros2_controllers.yaml")
     ros2_control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",

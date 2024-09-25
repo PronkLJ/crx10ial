@@ -61,12 +61,13 @@ def generate_launch_description():
         output='screen',
     )
     
-    # planning context
+    # Planning context
     moveit_config=(
         MoveItConfigsBuilder("robot")
-        .robot_description(xacro_file)
-        .trajectory_execution(file_path="config/moveit_controllers.yaml")
-        .robot_description_kinematics(file_path="config/kinematics.yaml")
+        .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'))
+        .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))
+        .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
+        .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
         .planning_scene_monitor(
             publish_robot_description=True, publish_robot_description_semantic=True
         )
