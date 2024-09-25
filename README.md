@@ -13,8 +13,8 @@ This repository currently includes four packages:
 
 To install the four packages from inside your workspace:
 ```console
-$ cd src
-$ git clone https://github.com/PronkLJ/crx10ial
+cd src
+git clone https://github.com/PronkLJ/crx10ial
 ```
 
 ## Main Launch File
