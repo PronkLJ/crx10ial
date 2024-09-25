@@ -12,56 +12,14 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
 
-    # Robot model
-    xacro_file = os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')
-    # Process xacro 
-    doc = xacro.parse(open(xacro_file))
-    xacro.process_doc(doc)
-
-    # Start Gazebo
-    gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [PathJoinSubstitution([FindPackageShare("gazebo_ros"), "launch", "gazebo.launch.py"])]
-        ),
-        launch_arguments={"verbose": "false"}.items(),
+    # Launch Gazebo Classic
+    gazebo_classic_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('robot_bringup'), 'launch', 'gazebo_classic.launch.py')]),
     )
 
-    # Robot State Publisher Node
-    robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name="robot_state_publisher",
-        output="screen",
-        parameters=[{'robot_description': doc.toxml(),
-                     'use_sim_time': True,
-                     }],
-    )
-
-    # Spawn Gazebo Model Node
-    spawn_entity = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=['-topic', '/robot_description', '-entity', 'cobot'],
-        output='screen',
-    )
-
-    # Load the joint state controller
-    load_joint_state_controller = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['joint_state_broadcaster'],
-        output='screen',
-    )
-
-    # Load the manipulator controller
-    load_manipulator_controller = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['manipulator_controller'],
-        output='screen',
-    )
+    # Launch MoveIt Components for Path Planning
     
-    # Planning context
+    # Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
         .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'))
@@ -74,7 +32,7 @@ def generate_launch_description():
         .to_moveit_configs()
     )
     
-    # Start the actual move group node
+    # Move Group Node
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
@@ -87,7 +45,7 @@ def generate_launch_description():
         ],
     )
 
-    ## RViz Node
+    # RViz Node
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",
@@ -102,6 +60,7 @@ def generate_launch_description():
         ],
     )
 
+    # Static Transformer Node
     static_tf = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
@@ -111,11 +70,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        gazebo,
-        robot_state_publisher,
-        spawn_entity,
-        load_joint_state_controller,
-        load_manipulator_controller,
+        gazebo_classic_launch,
         rviz_node,
         static_tf,
         move_group_node,

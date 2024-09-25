@@ -8,10 +8,10 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
 
-    # Planning context
+    # Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
-        .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'))
+        .robot_description((os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot_moveit.xacro')))
         .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))
         .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
         .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
@@ -21,7 +21,7 @@ def generate_launch_description():
         .to_moveit_configs()
     )
     
-    # Start the actual move group node
+    # Move Group Node
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
@@ -29,7 +29,7 @@ def generate_launch_description():
         parameters=[moveit_config.to_dict()]
     )
 
-    ## RViz Node
+    # RViz Node
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",
@@ -43,6 +43,7 @@ def generate_launch_description():
         ],
     )
 
+    # Statitc Transform Node
     static_tf = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
@@ -60,6 +61,7 @@ def generate_launch_description():
         parameters=[moveit_config.robot_description],
     )
 
+    # ROS2 Controller Node
     ros2_controllers_path = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "ros2_controllers.yaml")
     ros2_control_node = Node(
         package="controller_manager",
@@ -68,6 +70,7 @@ def generate_launch_description():
         output="both",
     )
 
+    # Joint State Controllers
     joint_state_controller = Node(
         package="controller_manager",
         executable="spawner",
@@ -75,6 +78,7 @@ def generate_launch_description():
         output="screen",
     )
 
+    # Manipulator Controller
     manipulator_controller = Node(
         package="controller_manager",
         executable="spawner",
@@ -82,20 +86,18 @@ def generate_launch_description():
         output="screen",
     )
 
-    return LaunchDescription(
-        [
-            rviz_node,
-            static_tf,
-            robot_state_publisher,
-            ros2_control_node,
-            joint_state_controller,
-            manipulator_controller,
+    return LaunchDescription([
+        rviz_node,
+        static_tf,
+        robot_state_publisher,
+        ros2_control_node,
+        joint_state_controller,
+        manipulator_controller,
 
-            RegisterEventHandler(
-                OnProcessExit(
-                    target_action=joint_state_controller,
-                    on_exit=[move_group_node]
-                )
+        RegisterEventHandler(
+            OnProcessExit(
+                target_action=joint_state_controller,
+                on_exit=[move_group_node]
             )
-        ]
-    )
+        )
+    ])

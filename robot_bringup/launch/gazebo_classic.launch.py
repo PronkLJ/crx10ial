@@ -1,10 +1,9 @@
 import os
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, RegisterEventHandler
+from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
-from launch.event_handlers import OnShutdown, OnProcessExit, OnProcessStart
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 import xacro
@@ -31,10 +30,9 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name="robot_state_publisher",
         output="screen",
-        parameters=[{'robot_description': doc.toxml(),
-                     #'use_sim_time': True,
-                     }],
+        parameters=[{'robot_description': doc.toxml()}],
     )
+
 
     # Spawn Gazebo Model Node
     spawn_entity = Node(
@@ -44,16 +42,16 @@ def generate_launch_description():
         output='screen',
     )
 
-    # Load the joint state controller
-    load_joint_state_controller = Node(
+    # Joint State Controller
+    joint_state_controller = Node(
         package='controller_manager',
         executable='spawner',
         arguments=['joint_state_broadcaster'],
         output='screen',
     )
 
-    # Load the manipulator controller
-    load_manipulator_controller = Node(
+    # Manipulator Controller
+    manipulator_controller = Node(
         package='controller_manager',
         executable='spawner',
         arguments=['manipulator_controller'],
@@ -64,6 +62,6 @@ def generate_launch_description():
         gazebo,
         robot_state_publisher,
         spawn_entity,
-        load_joint_state_controller,
-        load_manipulator_controller,
+        joint_state_controller,
+        manipulator_controller,
     ])
