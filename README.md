@@ -40,3 +40,4 @@ ros2 launch robot_bringup gazebo_classic.launch.py
 ## To-do
 * Gazebo Sim instead of Gazebo Classic (EOL January 2025)
 * Connect to physical robot
+* Add end effector
