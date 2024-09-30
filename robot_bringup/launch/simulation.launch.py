@@ -60,18 +60,8 @@ def generate_launch_description():
         ],
     )
 
-    # Static Transformer Node
-    static_tf = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        name="static_transform_publisher",
-        output="log",
-        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
-    )
-
     return LaunchDescription([
         gazebo_classic_launch,
         rviz_node,
-        static_tf,
         move_group_node,
     ])

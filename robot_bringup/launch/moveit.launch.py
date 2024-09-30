@@ -11,7 +11,7 @@ def generate_launch_description():
     # Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
-        .robot_description((os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot_moveit.xacro')))
+        .robot_description((os.path.join(get_package_share_directory('robot_description'), 'urdf', 'moveit_robot.xacro')))
         .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))
         .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
         .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
@@ -41,15 +41,6 @@ def generate_launch_description():
             moveit_config.robot_description_semantic,
             moveit_config.robot_description_kinematics,
         ],
-    )
-
-    # Statitc Transform Node
-    static_tf = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        name="static_transform_publisher",
-        output="log",
-        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
     )
 
     # Robot State Publisher Node
@@ -88,7 +79,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         rviz_node,
-        static_tf,
         robot_state_publisher,
         ros2_control_node,
         joint_state_controller,
