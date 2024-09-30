@@ -9,7 +9,7 @@
 
   <!-- MoveIt controllers -->
   <xacro:include filename="$(find robot_description)/urdf/moveit_ros2_control.xacro" />
-  <xacro:crx10ial_ros2_control name="FakeSystem" initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml"/>
+  <xacro:ros2_control name="FakeSystem" initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml"/>
 
   <xacro:crx10ial/>
 </robot>
