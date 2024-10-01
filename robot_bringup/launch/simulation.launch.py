@@ -1,13 +1,9 @@
 import os
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution
-from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
-import xacro
-
 from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
@@ -19,7 +15,7 @@ def generate_launch_description():
 
     # Launch MoveIt Components for Path Planning
     
-    # Planning Context
+    ## Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
         .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'))
@@ -32,7 +28,7 @@ def generate_launch_description():
         .to_moveit_configs()
     )
     
-    # Move Group Node
+    ## Move Group Node
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
@@ -45,7 +41,7 @@ def generate_launch_description():
         ],
     )
 
-    # RViz Node
+    ## RViz Node
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",

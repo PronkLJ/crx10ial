@@ -101,6 +101,26 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          finger_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           flange:
             Alpha: 1
             Show Axes: false
@@ -113,6 +133,16 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          mounting_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          quick_changer:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           tcp:
             Alpha: 1
             Show Axes: false
@@ -210,6 +240,26 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          finger_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          finger_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           flange:
             Alpha: 1
             Show Axes: false
@@ -222,6 +272,16 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          mounting_plate:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          quick_changer:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           tcp:
             Alpha: 1
             Show Axes: false
@@ -261,7 +321,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3.821404218673706
+      Distance: 3.680000066757202
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -276,10 +336,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5
+      Pitch: 0.5749999284744263
       Target Frame: base_link
       Value: Orbit (rviz_default_plugins)
-      Yaw: -0.6230000257492065
+      Yaw: 5.795185565948486
     Saved: ~
 Window Geometry:
   Displays:
@@ -297,5 +357,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 3137
-  Y: 9
+  X: 2849
+  Y: -2

@@ -271,5 +271,8 @@
     <!-- Sensor links (not visualised) -->
     <link name="imu_link"/>
 
+    <!-- Add soft gripper to end of arm -->
+    <xacro:include filename="$(find robot_description)/urdf/softgripper.urdf.xacro"/>
+
   </xacro:macro>
 </robot>

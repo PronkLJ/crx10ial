@@ -111,5 +111,31 @@
         <gazebo reference="J6_link">
             <material>Gazebo/Black</material>
         </gazebo>
+
+        <!-- Add colours to the end effector -->
+        <gazebo reference="quick_changer">
+            <material>Gazebo/Blue</material>
+        </gazebo>
+
+        <gazebo reference="mounting_plate">
+            <material>Gazebo/Grey</material>
+        </gazebo>
+
+        <gazebo reference="finger_1">
+            <material>Gazebo/BlueGlow</material>
+        </gazebo>
+
+        <gazebo reference="finger_2">
+            <material>Gazebo/BlueGlow</material>
+        </gazebo>
+
+        <gazebo reference="finger_3">
+            <material>Gazebo/BlueGlow</material>
+        </gazebo>
+
+        <gazebo reference="finger_4">
+            <material>Gazebo/BlueGlow</material>
+        </gazebo>
+
     </xacro:macro>
 </robot>

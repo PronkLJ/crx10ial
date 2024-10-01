@@ -10,10 +10,10 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="manipulator">
-        <chain base_link="base_link" tip_link="tcp"/>
+        <chain base_link="base_link" tip_link="flange"/>
     </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="end_effector" parent_link="tcp" group="manipulator"/>
+    <end_effector name="end_effector" parent_link="flange" group="manipulator"/>
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="world_joint" type="fixed" parent_frame="world" child_link="base_link"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
@@ -27,7 +27,41 @@
     <disable_collisions link1="J3_link" link2="J5_link" reason="Never"/>
     <disable_collisions link1="J3_link" link2="J6_link" reason="Never"/>
     <disable_collisions link1="J3_link" link2="base_link" reason="Never"/>
+    <disable_collisions link1="J3_link" link2="finger_1" reason="Never"/>
+    <disable_collisions link1="J3_link" link2="finger_2" reason="Never"/>
+    <disable_collisions link1="J3_link" link2="finger_3" reason="Never"/>
+    <disable_collisions link1="J3_link" link2="finger_4" reason="Never"/>
+    <disable_collisions link1="J3_link" link2="mounting_plate" reason="Never"/>
+    <disable_collisions link1="J3_link" link2="quick_changer" reason="Never"/>
     <disable_collisions link1="J4_link" link2="J5_link" reason="Adjacent"/>
     <disable_collisions link1="J4_link" link2="J6_link" reason="Never"/>
+    <disable_collisions link1="J4_link" link2="quick_changer" reason="Never"/>
     <disable_collisions link1="J5_link" link2="J6_link" reason="Adjacent"/>
+    <disable_collisions link1="J5_link" link2="finger_1" reason="Never"/>
+    <disable_collisions link1="J5_link" link2="finger_2" reason="Never"/>
+    <disable_collisions link1="J5_link" link2="finger_3" reason="Never"/>
+    <disable_collisions link1="J5_link" link2="finger_4" reason="Never"/>
+    <disable_collisions link1="J5_link" link2="mounting_plate" reason="Never"/>
+    <disable_collisions link1="J5_link" link2="quick_changer" reason="Never"/>
+    <disable_collisions link1="J6_link" link2="finger_1" reason="Never"/>
+    <disable_collisions link1="J6_link" link2="finger_2" reason="Never"/>
+    <disable_collisions link1="J6_link" link2="finger_3" reason="Never"/>
+    <disable_collisions link1="J6_link" link2="finger_4" reason="Never"/>
+    <disable_collisions link1="J6_link" link2="mounting_plate" reason="Never"/>
+    <disable_collisions link1="J6_link" link2="quick_changer" reason="Adjacent"/>
+    <disable_collisions link1="finger_1" link2="finger_2" reason="Never"/>
+    <disable_collisions link1="finger_1" link2="finger_3" reason="Never"/>
+    <disable_collisions link1="finger_1" link2="finger_4" reason="Never"/>
+    <disable_collisions link1="finger_1" link2="mounting_plate" reason="Adjacent"/>
+    <disable_collisions link1="finger_1" link2="quick_changer" reason="Never"/>
+    <disable_collisions link1="finger_2" link2="finger_3" reason="Never"/>
+    <disable_collisions link1="finger_2" link2="finger_4" reason="Never"/>
+    <disable_collisions link1="finger_2" link2="mounting_plate" reason="Adjacent"/>
+    <disable_collisions link1="finger_2" link2="quick_changer" reason="Never"/>
+    <disable_collisions link1="finger_3" link2="finger_4" reason="Never"/>
+    <disable_collisions link1="finger_3" link2="mounting_plate" reason="Adjacent"/>
+    <disable_collisions link1="finger_3" link2="quick_changer" reason="Never"/>
+    <disable_collisions link1="finger_4" link2="mounting_plate" reason="Adjacent"/>
+    <disable_collisions link1="finger_4" link2="quick_changer" reason="Never"/>
+    <disable_collisions link1="mounting_plate" link2="quick_changer" reason="Adjacent"/>
 </robot>
