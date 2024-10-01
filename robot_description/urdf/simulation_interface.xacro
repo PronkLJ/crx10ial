@@ -91,7 +91,7 @@
 
         <!-- Add colours to the robot in Gazebo -->
         <gazebo reference="base_link">
-            <material>Gazebo/Black</material>
+            <material>Gazebo/Road</material>
         </gazebo>
         <gazebo reference="J1_link">
             <material>Gazebo/White</material>
@@ -109,7 +109,7 @@
             <material>Gazebo/White</material>
         </gazebo>
         <gazebo reference="J6_link">
-            <material>Gazebo/Black</material>
+            <material>Gazebo/Road</material>
         </gazebo>
 
         <!-- Add colours to the end effector -->
