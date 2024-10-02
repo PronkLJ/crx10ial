@@ -32,9 +32,14 @@ ros2 launch robot_description view_robot.launch.py
 ```console
 ros2 launch robot_bringup moveit.launch.py
 ```
-### Displaying model in Gazebo (no control)
+### Displaying model in Gazebo Classic (no control)
 ```console
 ros2 launch robot_bringup gazebo_classic.launch.py
+```
+
+### Displaying model in Gazebo (Ignition) (no control)
+```console
+ros2 launch robot_bringup gazebo_sim.launch.py
 ```
 
 ## To-do

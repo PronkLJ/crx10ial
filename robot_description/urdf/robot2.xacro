@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="crx10ial" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- Utils -->
+  <xacro:include filename="$(find robot_description)/urdf/utils.xacro" />
+
+  <!-- Robot model-->
+  <xacro:include filename="$(find robot_description)/urdf/robot.urdf.xacro"/>
+
+  <!-- Gazebo Controllers -->
+  <xacro:include filename="$(find robot_description)/urdf/simulation_interface2.xacro"/>
+  <xacro:ros2_control name="GazeboSystem" initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml"/>
+  
+  <xacro:crx10ial/>
+</robot>
