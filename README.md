@@ -24,6 +24,11 @@ ros2 launch robot_bringup simulation.launch.py
 ```
 
 ## Other Launch files
+
+### Launch Gazebo (Ignition) and MoveIt2
+```console
+ros2 launch robot_bringup simulation2.launch.py
+```
 ### RViz with manual control of the joints
 ```console
 ros2 launch robot_description view_robot.launch.py
@@ -45,4 +50,3 @@ ros2 launch robot_bringup gazebo_sim.launch.py
 ## To-do
 * Connect to physical robot
 * Add functionality to the end effector
-* Gazebo Sim instead of Gazebo Classic (EOL January 2025)
