@@ -3,7 +3,7 @@
 
   <!-- Arguments -->
   <xacro:arg name="moveit_only" default="false"/>
-  <xacro:arg name="gazebo_classic" default="false"/>
+  <xacro:arg name="gazebo_classic" default="true"/>
 
   <!-- Utils -->
   <xacro:include filename="$(find robot_description)/urdf/utils.xacro" />
@@ -11,16 +11,9 @@
   <!-- Robot model-->
   <xacro:include filename="$(find robot_description)/urdf/robot.urdf.xacro"/>
 
-  <!-- Load Gazebo Controllers unless moveit_only is true -->
-  <xacro:unless value="$(arg moveit_only)">
-    <xacro:include filename="$(find robot_description)/urdf/simulation_interface.xacro"/>
-    <xacro:ros2_control name="GazeboSystem" initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml" gazebo_classic="$(arg gazebo_classic)"/>
-  </xacro:unless>
+  <!-- Simulation interface -->
+  <xacro:include filename="$(find robot_description)/urdf/simulation_interface.xacro"/>
+  <xacro:ros2_control name="GazeboSystem" initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml" moveit_only="$(arg moveit_only)" gazebo_classic="$(arg gazebo_classic)"/>
 
-  <!-- Load MoveIt Controllers if moveit_only is true -->
-  <xacro:if value="$(arg moveit_only)">
-    <xacro:include filename="$(find robot_description)/urdf/moveit_ros2_control.xacro" />
-    <xacro:ros2_control name="FakeSystem" initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml"/>
-  </xacro:if>
   <xacro:crx10ial/>
 </robot>
