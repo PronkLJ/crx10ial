@@ -22,7 +22,7 @@ def generate_launch_description():
     moveit_config=(
         MoveItConfigsBuilder("robot")
         .robot_description(
-            (os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')),
+            os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'),
             {"moveit_only": moveit_only}               
         )
         .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))

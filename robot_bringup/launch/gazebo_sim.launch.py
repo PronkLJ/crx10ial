@@ -1,9 +1,8 @@
 import os
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command
-from launch_ros.parameter_descriptions import ParameterValue
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 import xacro
@@ -13,12 +12,14 @@ world = 'empty_world'
 # WORK IN PROGRESS
 
 def generate_launch_description():
+
+    # Value to ensure loading of correct controllers
+    gazebo_classic = 'false'
     
-    ## Robot model
+    # Robot model
     xacro_file = os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')
-    # Process xacro 
-    doc = xacro.parse(open(xacro_file))
-    xacro.process_doc(doc)
+    # Process xacro
+    doc = xacro.process_file(xacro_file, mappings={'gazebo_classic': gazebo_classic})
 
     ## Gazebo world 
     world_file = os.path.join(get_package_share_directory('robot_description'), 'world', world+'.sdf')

@@ -50,3 +50,7 @@ ros2 launch robot_bringup gazebo_sim.launch.py
 ## To-do
 * Connect to physical robot
 * Add functionality to the end effector
+
+## Known bugs
+* Gazebo Sim: base is not properly attached to world
+* simulation2.launch.py: free move in MoveIt is not working

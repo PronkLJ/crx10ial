@@ -8,6 +8,9 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
 
+    # Value to ensure loading of correct controllers
+    gazebo_classic = 'false'
+
     # Launch Gazebo Sim
     gazebo_sim_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('robot_bringup'), 'launch', 'gazebo_sim.launch.py')]),
@@ -18,7 +21,10 @@ def generate_launch_description():
     ## Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
-        .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'))
+        .robot_description(
+            os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'),
+            {"gazebo_classic": gazebo_classic}
+        )
         .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))
         .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
         .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
