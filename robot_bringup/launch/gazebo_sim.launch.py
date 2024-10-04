@@ -10,10 +10,12 @@ import xacro
 
 world = 'empty_world'
 
+# WORK IN PROGRESS
+
 def generate_launch_description():
     
     ## Robot model
-    xacro_file = os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot2.xacro')
+    xacro_file = os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')
     # Process xacro 
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)
@@ -78,7 +80,6 @@ def generate_launch_description():
 
     ## Launch description
     return LaunchDescription([
-
         # Launch
         gazebo,
 
@@ -88,5 +89,4 @@ def generate_launch_description():
         joint_state_controller,
         manipulator_controller,
         #gz_bridge_node,
-
     ])
