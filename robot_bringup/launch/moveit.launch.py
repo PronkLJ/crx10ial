@@ -1,17 +1,30 @@
 import os
 from launch import LaunchDescription
-from launch.actions import RegisterEventHandler
+from launch.actions import RegisterEventHandler, DeclareLaunchArgument
 from launch_ros.actions import Node
 from launch.event_handlers import OnProcessExit
+from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
 
+    # Argument to load the MoveIt controllers in robot.xacro
+    moveit_only_arg = DeclareLaunchArgument(
+        'moveit_only',
+        default_value='true',
+        description='If true, only MoveIt is launched'
+    )
+
+    moveit_only = LaunchConfiguration('moveit_only')
+
     # Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
-        .robot_description((os.path.join(get_package_share_directory('robot_description'), 'urdf', 'moveit_robot.xacro')))
+        .robot_description(
+            (os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')),
+            {"moveit_only": moveit_only}               
+        )
         .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))
         .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
         .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
@@ -78,6 +91,8 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        moveit_only_arg,
+
         rviz_node,
         robot_state_publisher,
         ros2_control_node,
