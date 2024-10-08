@@ -39,12 +39,20 @@ def generate_launch_description():
         parameters=[{'robot_description': doc.toxml()}],
         #emulate_tty=True
     )
+    
+    static_tf = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="static_transform_publisher",
+        output="log",
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"],
+    )
 
     # Spawn Gazebo model
     spawn_sim_robot = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-name', 'smart_diffbot', '-topic', 'robot_description', '-z', '1.0'],
+        arguments=['-name', 'cobot', '-topic', 'robot_description', '-z', '1.0'],
         output='screen',
     )
 
@@ -70,14 +78,15 @@ def generate_launch_description():
         executable='parameter_bridge',
         arguments=[
             '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
-            '/camera/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image',
-            '/camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo',
-            '/navsat/fix@sensor_msgs/msg/NavSatFix[ignition.msgs.NavSat',
             '/imu/data@sensor_msgs/msg/Imu[ignition.msgs.IMU'
+            # Joint states (IGN -> ROS2)
+            '/world/empty/model/cobot/joint_state@sensor_msgs/msg/JointState]gz.msgs.Model',
+        ],
+        remappings=[
+            ('/world/empty/model/cobot/joint_state', 'joint_states'),
         ],
         output='screen',
     )
-
 
     ## Launch description
     return LaunchDescription([
@@ -86,8 +95,9 @@ def generate_launch_description():
 
         # Nodes
         robot_state_publisher,
+        static_tf,
         spawn_sim_robot,
         joint_state_controller,
         manipulator_controller,
-        #gz_bridge_node,
+        gz_bridge_node,
     ])

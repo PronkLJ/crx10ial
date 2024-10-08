@@ -48,9 +48,9 @@ ros2 launch robot_bringup gazebo_sim.launch.py
 ```
 
 ## To-do
+* Create input variable for a position that the robot arm moves to (automated MoveIt)
 * Connect to physical robot
 * Add functionality to the end effector
 
 ## Known bugs
-* Gazebo Sim: base is not properly attached to world
-* simulation2.launch.py: free move in MoveIt is not working
+* Gazebo Sim: joints are not receiving enough effort to maintain correct position
