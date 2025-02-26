@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>robot_motion</name>
+  <version>0.0.1</version>
+  <description>Package containing files for robot motion, specifically the FANUC CRX10iA/L</description>
+  <maintainer email="l.j.pronk@utwente.nl">Lucas Pronk</maintainer>
+  <license>Apache Licence 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

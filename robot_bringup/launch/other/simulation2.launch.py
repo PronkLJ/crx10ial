@@ -13,7 +13,7 @@ def generate_launch_description():
 
     # Launch Gazebo Sim
     gazebo_sim_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('robot_bringup'), 'launch', 'gazebo_sim.launch.py')]),
+        PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('robot_bringup'), 'launch', 'other','gazebo_sim.launch.py')]),
     )
 
     # Launch MoveIt Components for Path Planning

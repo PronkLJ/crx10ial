@@ -30,7 +30,7 @@ ros2 launch robot_bringup simulation.launch.py
 ### Launch FANUC ROS interface and MoveIt2
 Terminal 1:
 ```console
-ros2 launch fanuc_ros2_driver fanuc_interface.launch.py robot_ip:="[IP address]" robot_type:="crx10ia_l"
+ros2 launch fanuc_ros2_driver fanuc_interface.launch.py robot_type:="crx10ia_l" robot_ip:="[IP address]" 
 ```
 Terminal 2:
 ```console
