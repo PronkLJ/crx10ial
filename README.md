@@ -38,6 +38,11 @@ Terminal 2:
 ros2 launch robot_bringup main.launch.py sim:=false
 ```
 
+### Moving the robot
+```console
+ros2 run robot_motion_planning dynamic_move_program [x] [y] [z]
+```
+
 ## Other Launch files (Depricated or under development)
 
 ### Launch Gazebo (Ignition) and MoveIt2
@@ -63,8 +68,6 @@ ros2 launch robot_bringup gazebo_sim.launch.py
 ```
 
 ## To-do
-* Create input variable for a position that the robot arm moves to (automated MoveIt)
-* Define moveable space for the robot to prevent collissions in physical setup
 * Add functionality to the end effector
 
 ## Known bugs

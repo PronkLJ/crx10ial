@@ -10,6 +10,17 @@ find_package(ament_cmake REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(rclcpp REQUIRED)
 
+# Add executable for adding ground plane
+add_executable(add_ground_plane src/add_ground_plane.cpp)
+target_include_directories(add_ground_plane PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+ament_target_dependencies(add_ground_plane
+  "moveit_ros_planning_interface"
+  "rclcpp"
+)
+
 # Add static_move_program executable
 add_executable(static_move_program src/static_move_program.cpp)
 target_include_directories(static_move_program PUBLIC
@@ -34,7 +45,7 @@ ament_target_dependencies(
   "rclcpp"
 )
 
-install(TARGETS static_move_program dynamic_move_program
+install(TARGETS add_ground_plane static_move_program dynamic_move_program
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

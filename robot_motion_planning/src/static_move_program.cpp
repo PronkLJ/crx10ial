@@ -1,16 +1,13 @@
-#include <memory> // Necessary memory include
-#include <rclcpp/rclcpp.hpp> // ROS2 client library
-#include <moveit/move_group_interface/move_group_interface.h> // MoveIt! for motion planning
-#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp> // For converting Euler angles to quaternions
+#include <memory> 
+#include <rclcpp/rclcpp.hpp> 
+#include <moveit/move_group_interface/move_group_interface.h> 
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp> 
 #include <tf2/LinearMath/Quaternion.h>
-#include <string.h>
+#include <string>
 #include <iostream>
-#include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
-#include <moveit_msgs/msg/display_robot_state.hpp>
-#include <moveit_msgs/msg/display_trajectory.hpp>
 
 // This MoveIt script allows for trajectory planning and executing of the robot
+// The x, y, and z coordinates are fixed within the code
 // For this code, inspiration was gained from the following sources:
 // - Cartesian planning with MoveIt2: https://www.youtube.com/watch?v=RaQ8Ibd9vck
 // - C++ and MoveIt 2 to Perform Motion Planning: https://www.youtube.com/watch?v=ggOROufX0tE
@@ -29,21 +26,19 @@ int main (int argc, char **argv) {
 
   static const std::string PLANNING_GROUP = "arm"; 
 
-  moveit::planning_interface::MoveGroupInterface move_group_arm(
-    move_group_node, PLANNING_GROUP
-  );
-
+  moveit::planning_interface::MoveGroupInterface move_group_arm(move_group_node, PLANNING_GROUP);
   const moveit::core::JointModelGroup *joint_model_group_arm = move_group_arm.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
-
+  
   // Get Current State
   moveit::core::RobotStatePtr current_state_arm = move_group_arm.getCurrentState(10);
 
   std::vector<double> joint_group_positions_arm;
   current_state_arm->copyJointGroupPositions(joint_model_group_arm, joint_group_positions_arm);
 
-  // // Go Home (somehow necessary for maintaining roughly the same orientation)
+  // Move to home position first
+  RCLCPP_INFO(LOGGER, "Moving to home position...");
   move_group_arm.setStartStateToCurrentState();
-  RCLCPP_INFO(LOGGER, "Going home");
+
   joint_group_positions_arm[0] = 0.00;
   joint_group_positions_arm[1] = 0.00;
   joint_group_positions_arm[2] = 0.00;
@@ -56,17 +51,17 @@ int main (int argc, char **argv) {
   moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
   bool succes_arm = (move_group_arm.plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
 
-  
   // Execute (not sure if needed in the final program)
   if (succes_arm) {
     move_group_arm.execute(my_plan_arm);
   }
   else {
     RCLCPP_ERROR(LOGGER, "Not able to plan and execute.");
+    return 1;
   }
 
-  // Move to set position
-  RCLCPP_INFO(LOGGER, "Move to set position");
+  // Move to target position
+  RCLCPP_INFO(LOGGER, "Moving to target position...");
   current_state_arm = move_group_arm.getCurrentState(10);
   current_state_arm->copyJointGroupPositions(joint_model_group_arm, joint_group_positions_arm);
 
@@ -78,16 +73,17 @@ int main (int argc, char **argv) {
   target_pose1.position.x = 0.6;
   target_pose1.position.y = -0.17;
   target_pose1.position.z = 0.7;
-  move_group_arm.setPoseTarget(target_pose1);
 
+  move_group_arm.setPoseTarget(target_pose1);
   succes_arm = (move_group_arm.plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
 
-  // Execute
+  // Execute planned path
   if (succes_arm) {
     move_group_arm.execute(my_plan_arm);
   }
   else {
     RCLCPP_ERROR(LOGGER, "Not able to plan and execute.");
+    return 1;
   }
 
   // Shutdown ROS

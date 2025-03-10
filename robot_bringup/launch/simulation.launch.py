@@ -58,6 +58,14 @@ def generate_launch_description():
         output="screen",
     )
 
+    # Add ground plane
+    ground_plane_node = Node(
+        package="robot_motion_planning",
+        executable="add_ground_plane",
+        output="screen",
+    )
+
+
     return LaunchDescription([
         rviz,
         move_group,
@@ -66,4 +74,5 @@ def generate_launch_description():
         ros2_control,
         joint_state_controller,
         arm_controller,
+        ground_plane_node,
     ])
