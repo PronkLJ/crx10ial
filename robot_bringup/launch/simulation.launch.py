@@ -9,24 +9,28 @@ def generate_launch_description():
 
     moveit_dir = os.path.join(get_package_share_directory("crx10ia_l_moveit_config"));
 
+    # Move Group
     move_group = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
                 moveit_dir,
                 'launch/move_group.launch.py'))
     )
+    # Robot State Publisher
     robot_state_publisher = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
                 moveit_dir,
                 'launch/rsp.launch.py'))
     )
+    # Static Virtual Joints
     static_virtual_joint_tfs = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
                 moveit_dir,
                 'launch/static_virtual_joint_tfs.launch.py'))
     )
+    # RViz Node
     rviz = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -58,14 +62,6 @@ def generate_launch_description():
         output="screen",
     )
 
-    # Add ground plane
-    ground_plane_node = Node(
-        package="robot_motion_planning",
-        executable="add_ground_plane",
-        output="screen",
-    )
-
-
     return LaunchDescription([
         rviz,
         move_group,
@@ -74,5 +70,4 @@ def generate_launch_description():
         ros2_control,
         joint_state_controller,
         arm_controller,
-        ground_plane_node,
     ])

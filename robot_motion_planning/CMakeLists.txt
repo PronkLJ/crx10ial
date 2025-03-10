@@ -21,6 +21,17 @@ ament_target_dependencies(add_ground_plane
   "rclcpp"
 )
 
+# Add executable for adding ceiling plane
+add_executable(add_ceiling_plane src/add_ceiling_plane.cpp)
+target_include_directories(add_ceiling_plane PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+ament_target_dependencies(add_ceiling_plane
+  "moveit_ros_planning_interface"
+  "rclcpp"
+)
+
 # Add static_move_program executable
 add_executable(static_move_program src/static_move_program.cpp)
 target_include_directories(static_move_program PUBLIC
@@ -45,7 +56,19 @@ ament_target_dependencies(
   "rclcpp"
 )
 
-install(TARGETS add_ground_plane static_move_program dynamic_move_program
+# Add executable to move robot to homing position
+add_executable(move_to_home src/move_to_home.cpp)
+target_include_directories(move_to_home PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_features(move_to_home PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+ament_target_dependencies(
+  move_to_home
+  "moveit_ros_planning_interface"
+  "rclcpp"
+)
+
+install(TARGETS add_ground_plane add_ceiling_plane static_move_program dynamic_move_program move_to_home
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

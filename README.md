@@ -42,6 +42,9 @@ ros2 launch robot_bringup main.launch.py sim:=false
 ```console
 ros2 run robot_motion_planning dynamic_move_program [x] [y] [z]
 ```
+```console
+ros2 run robot_motion_planning move_to_home
+```
 
 ## Other Launch files (Depricated or under development)
 
