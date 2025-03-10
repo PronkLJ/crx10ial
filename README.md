@@ -5,20 +5,20 @@ Tested in ROS2 Humble Hawksbill.
 For physical control of the robot, the robot controller must have ROS 2 Package (S568).
 
 ## Content
-This repository currently includes three packages:
+This repository currently includes four packages, of which only robot_bringup and robot_motion are actively used. The other two only function as reference.
 * The robot_description package describes the crx10ial robot. Most of the URDF is from [the work of Paulo Franceshi](https://github.com/paolofrance/crx_description) (Depricated, now uses URDF from FANUC).
 * The robot_bringup package includes launch files for the Gazebo and MoveIt simulation & path planning.
 * The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning (Depricated, now uses MoveIt configurations from FANUC).
 
 ## Package installation
 
-To install the three packages from inside your workspace:
+To install the four packages from inside your workspace:
 ```console
 cd src
 git clone https://github.com/PronkLJ/crx10ial
 ```
 
-The FANUC ROS2 drivers are supplied by FANUC.
+The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
 
 ## Simulation - main launch file
 ### Launch MoveIt2
