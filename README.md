@@ -6,9 +6,9 @@ For physical control of the robot, the robot controller must have ROS 2 Package 
 
 ## Content
 This repository currently includes three packages:
-* The robot_description package describes the crx10ial robot. Most of the URDF is from [the work of Paulo Franceshi](https://github.com/paolofrance/crx_description).
+* The robot_description package describes the crx10ial robot. Most of the URDF is from [the work of Paulo Franceshi](https://github.com/paolofrance/crx_description) (Depricated, now uses URDF from FANUC).
 * The robot_bringup package includes launch files for the Gazebo and MoveIt simulation & path planning.
-* The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning.
+* The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning (Depricated, now uses MoveIt configurations from FANUC).
 
 ## Package installation
 
@@ -21,9 +21,9 @@ git clone https://github.com/PronkLJ/crx10ial
 The FANUC ROS2 drivers are supplied by FANUC.
 
 ## Simulation - main launch file
-### Launch Gazebo (Classic) and MoveIt2
+### Launch MoveIt2
 ```console
-ros2 launch robot_bringup simulation.launch.py
+ros2 launch robot_bringup main.launch.py sim:=true
 ```
 
 ## Physical control
@@ -34,11 +34,10 @@ ros2 launch fanuc_ros2_driver fanuc_interface.launch.py robot_type:="crx10ia_l" 
 ```
 Terminal 2:
 ```console
-ros2 launch robot_bringup robot_control.launch.py
+ros2 launch robot_bringup main.launch.py sim:=false
 ```
 
-
-## Other Launch files
+## Other Launch files (Depricated or under development)
 
 ### Launch Gazebo (Ignition) and MoveIt2
 ```console
@@ -67,5 +66,5 @@ ros2 launch robot_bringup gazebo_sim.launch.py
 * Add functionality to the end effector
 
 ## Known bugs
-* Gazebo Sim: joints are not receiving enough effort to maintain correct position
+* Gazebo Sim: joints are not receiving enough effort to maintain correct position (might be ROS2 Humble related?)
 
