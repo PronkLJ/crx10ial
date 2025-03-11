@@ -12,8 +12,8 @@
 // This MoveIt script allows for trajectory planning and executing of the robot
 // The x, y, and z coordinates are given as arguments when executing the script
 // For this code, inspiration was gained from the work of the following sources:
-// - Cartesian planning with MoveIt2: https://www.youtube.com/watch?v=RaQ8Ibd9vck
-// - C++ and MoveIt 2 to Perform Motion Planning: https://www.youtube.com/watch?v=ggOROufX0tE
+//  - Cartesian planning with MoveIt2: https://www.youtube.com/watch?v=RaQ8Ibd9vck
+//  - C++ and MoveIt 2 to Perform Motion Planning: https://www.youtube.com/watch?v=ggOROufX0tE
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("move_program");
 
