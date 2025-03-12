@@ -57,7 +57,9 @@ int main (int argc, char **argv) {
   }
   else {
     RCLCPP_ERROR(LOGGER, "Not able to plan and execute.");
-    return 1;
+    // Shutdown ROS
+    rclcpp::shutdown();
+    return 0;
   }
 
   // Shutdown ROS

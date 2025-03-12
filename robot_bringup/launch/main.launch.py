@@ -11,7 +11,9 @@ from launch_ros.actions import Node
 def generate_launch_description():
     ## Arguments
     sim_arg = DeclareLaunchArgument(name='sim', default_value='true', choices=['true', 'false'],
-                                    description='Set to true to switch from hardware to simulation in the loop')
+                                    description='Set to true or false to switch between hardware and simulation in the loop')
+    gazebo_arg = DeclareLaunchArgument(name='gazebo', default_value='false', choices=['true', 'false'],
+                                    description='Set to true to also launch Gazebo')
 
     launch_group = GroupAction([
         # Launch physical robot control
@@ -23,6 +25,12 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('robot_bringup'), 'launch', 'simulation.launch.py')]),
             condition=IfCondition(LaunchConfiguration('sim')),
+        ),
+
+        # Launch Gazebo if argument is true
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('robot_bringup'), 'launch', 'gazebo.launch.py')]),
+            condition=IfCondition(LaunchConfiguration('gazebo')),
         ),
     ])
 
@@ -41,7 +49,8 @@ def generate_launch_description():
     
     return LaunchDescription([
         sim_arg,
+        gazebo_arg,
         launch_group,
         ground_plane_node,
-        ceiling_plane_node,
+        #ceiling_plane_node,
     ])

@@ -72,7 +72,9 @@ int main(int argc, char **argv) {
         move_group_arm.execute(my_plan_arm);
     } else {
         RCLCPP_ERROR(LOGGER, "Failed to move to home position.");
-        return 1;
+        // Shutdown ROS
+        rclcpp::shutdown();
+        return 0;    
     }
 
     // Move to target position
@@ -81,6 +83,9 @@ int main(int argc, char **argv) {
     current_state_arm->copyJointGroupPositions(joint_model_group_arm, joint_group_positions_arm);
 
     geometry_msgs::msg::Pose target_pose;
+    target_pose.orientation.x = 0.0;
+    target_pose.orientation.y = 0.0;
+    target_pose.orientation.z = 0.0;
     target_pose.orientation.w = 1.0;  // Neutral orientation
     target_pose.position.x = target_x;
     target_pose.position.y = target_y;
@@ -94,7 +99,9 @@ int main(int argc, char **argv) {
         move_group_arm.execute(my_plan_arm);
     } else {
         RCLCPP_ERROR(LOGGER, "Failed to move to target position.");
-        return 1;
+        // Shutdown ROS
+        rclcpp::shutdown();
+        return 0;        
     }
 
     // Shutdown ROS

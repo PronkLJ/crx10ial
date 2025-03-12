@@ -7,7 +7,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    moveit_dir = os.path.join(get_package_share_directory("crx10ia_l_moveit_config"));
+    moveit_dir = os.path.join(get_package_share_directory("crx10ia_l_moveit_config"))
 
     # Move Group
     move_group = IncludeLaunchDescription(
@@ -36,7 +36,7 @@ def generate_launch_description():
             os.path.join(
                 moveit_dir,
                 'launch/moveit_rviz.launch.py'))
-    )    
+    ) 
     # Add ros2_control_node for simulation
     ros2_control = Node(
         package="controller_manager",
