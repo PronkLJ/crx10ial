@@ -5,7 +5,7 @@ Tested in ROS2 Humble Hawksbill.
 For physical control of the robot, the robot controller must have ROS 2 Package (S568).
 
 ## Content
-This repository currently includes two packages:
+This repository currently includes the following packages:
 * The robot_description package describes the crx10ial robot.
 * The robot_bringup package includes launch files for the Gazebo and MoveIt simulation & path planning.
 * The robot_motion_planning package contains scripts for trajectory planning and execution of the robot. 
@@ -13,7 +13,7 @@ This repository currently includes two packages:
 
 ## Package installation
 
-To install the four packages from inside your workspace:
+To install the packages from inside your workspace:
 ```console
 cd src
 git clone https://github.com/PronkLJ/crx10ial
