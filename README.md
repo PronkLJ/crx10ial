@@ -1,13 +1,15 @@
 # Fanuc CRX10iA/L packages for ROS2 simulation
-The goal of these packages is to plan and execute paths in MoveIt 2, then displaying these movements in Gazebo (Classic).
+The packages in this repository allow for the planning and execution of trajectory paths in MoveIt2. In combination with the FANUC ROS2 node, these packages can control the physical robot as well.
 
 Tested in ROS2 Humble Hawksbill.
 For physical control of the robot, the robot controller must have ROS 2 Package (S568).
 
 ## Content
 This repository currently includes two packages:
+* The robot_description package describes the crx10ial robot.
 * The robot_bringup package includes launch files for the Gazebo and MoveIt simulation & path planning.
 * The robot_motion_planning package contains scripts for trajectory planning and execution of the robot. 
+* The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning 
 
 ## Package installation
 

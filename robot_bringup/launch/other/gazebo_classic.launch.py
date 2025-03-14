@@ -10,7 +10,7 @@ import xacro
 def generate_launch_description():
 
     # Robot model
-    xacro_file = os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro')
+    xacro_file = os.path.join(get_package_share_directory('crx_description'), 'robots', 'crx10ia_l.xacro')
     # Process xacro 
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)
