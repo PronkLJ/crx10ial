@@ -3,7 +3,8 @@ moveit_setup_assistant_config:
     package: robot_description
     relative_path: urdf/robot.xacro
   srdf:
-    relative_path: config/crx10ia_l.srdf
+    package: robot_description
+    relative_path: srdf/crx10ia_l.srdf
   package_settings:
     author_name: Lucas Pronk
     author_email: l.j.pronk@utwente.nl

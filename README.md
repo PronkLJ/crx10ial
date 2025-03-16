@@ -47,9 +47,11 @@ ros2 run robot_motion_planning move_to_home
 ```
 
 ## To-do
-* Gazebo + MoveIt control
-* Rewrite control launch file for more flexility
+* Test functionality of control2.launch.py (if succesful, replace control.launch.py & replace simulation.launch.py with moveit.launch.py)
+* Gazebo + MoveIt control (extend functionality of test(2).launch.py)
+* Merge moveit.ros2_control.xacro and gazebo.ros2_control.xacro into robot.xacro using args
 * Reintroduce utils.xacro
+* Add constraints for cobot table
 * Add functionality to the end effector (separate package?)
 * Dummy UR robot
 

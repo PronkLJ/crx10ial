@@ -1,7 +1,9 @@
 import os
 from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
-from ament_index_python.packages import get_package_share_directory
+from ament_index_python import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
@@ -12,8 +14,7 @@ def generate_launch_description():
     # Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
-        .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.moveit.xacro'))
-        .robot_description_semantic(os.path.join(get_package_share_directory("robot_description"), "srdf", "crx10ia_l.srdf"))
+        .robot_description(os.path.join(moveit_dir, 'config', 'crx10ia_l.urdf.xacro'))
         .trajectory_execution(os.path.join(moveit_dir, 'config', 'moveit_controllers.yaml'))
         .robot_description_kinematics(os.path.join(moveit_dir, 'config', 'kinematics.yaml'))
         .joint_limits(os.path.join(moveit_dir, 'config', 'joint_limits.yaml'))
@@ -64,37 +65,9 @@ def generate_launch_description():
         ],
     )
 
-    # ROS2 Controller Node
-    ros2_controllers_path = os.path.join(moveit_dir, "config", "ros2_controllers.yaml")
-    ros2_control = Node(
-        package="controller_manager",
-        executable="ros2_control_node",
-        parameters=[moveit_config.robot_description, ros2_controllers_path],
-        output="both",
-    )
-
-    # Joint State Controllers
-    joint_state_controller = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["joint_state_broadcaster"],
-        output="screen",
-    )
-
-    # Manipulator Controller
-    arm_controller = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["arm_controller"],
-        output="screen",
-    )
-
     return LaunchDescription([
-        rviz,
         move_group,
         robot_state_publisher,
         static_tf,
-        ros2_control,
-        joint_state_controller,
-        arm_controller,
+        rviz,
     ])

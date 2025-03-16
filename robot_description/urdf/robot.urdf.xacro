@@ -64,14 +64,14 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/base.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/visual/base.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_Black"/>
             </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/base.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/collision/base.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -92,14 +92,14 @@
       <visual>
         <origin xyz="0 0 ${mz_1 - l_base}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/visual/j1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_White"/>
             </visual>
       <collision>
         <origin xyz="0 0 ${mz_1 - l_base}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/collision/j1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -122,14 +122,14 @@
       <visual>
         <origin xyz="-${l_1} 0 ${mz_2 - l_base}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j2.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/visual/j2.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_White"/>
       </visual>
       <collision>
         <origin xyz="-${l_1} 0 ${mz_2 - l_base}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j2.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/collision/j2.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -152,14 +152,14 @@
       <visual>
         <origin xyz="-${l_1} 0 ${mz_3 - l_base - l_2}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j3.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/visual/j3.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_White"/>
       </visual>
       <collision>
         <origin xyz="-${l_1} 0 ${mz_3 - l_base - l_2}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j3.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/collision/j3.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -181,14 +181,14 @@
       <visual>
         <origin xyz="${mx_1 - l_1} 0 ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j4.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/visual/j4.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_White"/>
       </visual>
       <collision>
         <origin xyz="${mx_1 - l_1} 0 ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j4.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/collision/j4.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -210,14 +210,14 @@
       <visual>
         <origin xyz="${mx_1 -l_1 - l_4} ${my_1} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j5.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/visual/j5.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_White"/>
       </visual>
       <collision>
         <origin xyz="${mx_1 -l_1 - l_4} ${my_1} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j5.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/collision/j5.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
@@ -239,14 +239,14 @@
       <visual>
         <origin xyz="${mx_2 -l_1 - l_4} ${my_1 + l_5} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j6.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/visual/j6.stl" scale="0.001 0.001 0.001"/>
         </geometry>
 	      <material name="FANUC_Black"/>
       </visual>
       <collision>
         <origin xyz="${mx_2 -l_1 - l_4} ${my_1 + l_5} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j6.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="file://$(find robot_description)/meshes/collision/j6.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>

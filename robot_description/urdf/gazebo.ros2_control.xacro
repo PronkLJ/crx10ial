@@ -95,5 +95,12 @@
                 </state_interface>
             </joint>
         </ros2_control>
+        
+        <gazebo reference="world" />
+        <gazebo>
+          <plugin filename="libign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+            <parameters>$(find robot_moveit_config)/config/controllers.yaml</parameters>
+          </plugin>
+        </gazebo>
     </xacro:macro>
 </robot>

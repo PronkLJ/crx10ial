@@ -1,22 +1,15 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="crx10ia_l">
 
-  <xacro:include filename="$(find robot_description)/urdf/robot.xacro" /> 
-  <xacro:include filename="$(find robot_description)/urdf/gazebo.ros2_control.xacro" />
+    <!-- Robot model -->
+    <xacro:include filename="$(find robot_description)/urdf/robot.xacro" /> 
 
-  <xacro:arg name="simulation_controllers" default="$(find robot_moveit_config)/config/controllers.yaml" />
-
-  <xacro:gazebo_ros2_control
-    plugin_name="ign_ros2_control/IgnitionSystem"
-    initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml"
-    robot_parameters_file="$(find robot_moveit_config)/config/crx10ia_l.yaml"
-    driver_parameters_file="$(find robot_moveit_config)/config/driver.yaml"
-  />
-
-  <gazebo reference="world" />
-    <gazebo>
-    <plugin filename="libign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-      <parameters>$(arg simulation_controllers)</parameters>
-    </plugin>
-  </gazebo>
+    <!-- Gazebo ROS2 Control -->
+    <xacro:include filename="$(find robot_description)/urdf/gazebo.ros2_control.xacro" />
+    <xacro:gazebo_ros2_control
+      plugin_name="ign_ros2_control/IgnitionSystem"
+      initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml"
+      robot_parameters_file="$(find robot_moveit_config)/config/crx10ia_l.yaml"
+      driver_parameters_file="$(find robot_moveit_config)/config/driver.yaml"
+    />
 </robot>
