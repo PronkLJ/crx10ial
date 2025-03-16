@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-  <xacro:macro name="crx10ia_l">
+  <xacro:macro name="crx_robot" params="parent">
 
     <material name="FANUC_Black">
       <color rgba="0 0 0 1.0"/>
@@ -51,156 +51,63 @@
     <xacro:property name="mx_2" value="0.700"/>
     <xacro:property name="my_1" value="-0.150"/>
 
+    <!-- world coords -->
+    <link name="wbase" />
+    <joint name="base_link-wbase" type="fixed">
+      <origin xyz="0 0 ${l_base}" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="wbase"/>
+    </joint>
+
     <!-- links -->
     <link name="base_link">
       <visual>
-	<origin xyz="0 0 0" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/base.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-	<material name="FANUC_Black"/>
-      </visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/base.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="FANUC_Black"/>
+            </visual>
       <collision>
-	<origin xyz="0 0 0" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/base.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/base.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
       </collision>
-      	<inertial>
-	  <origin xyz="0 0 0" rpy="1.5708 0 0" /> 
-	  <mass value="10.0"/>
-	  <inertia ixx="0.02125" ixy="0" ixz="0" iyy="0.02125" iyz="0" izz="0.0125"/>
-	</inertial>
+      <inertial>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" /> 
+        <mass value="10.0"/>
+        <inertia ixx="0.02125" ixy="0" ixz="0" iyy="0.02125" iyz="0" izz="0.0125"/>
+      </inertial>
     </link>
+    <!-- Link to world -->
+    <joint name="base_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${parent}"/>
+      <child link="base_link" />
+    </joint>
 
+    <!-- J1 link and joint -->
     <link name="J1_link">
       <visual>
         <origin xyz="0 0 ${mz_1 - l_base}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j1.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-	<material name="FANUC_White"/>
-      </visual>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="FANUC_White"/>
+            </visual>
       <collision>
         <origin xyz="0 0 ${mz_1 - l_base}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j1.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
       </collision>
-	<inertial>
-	  <origin xyz="0 0 0" rpy="1.5708 0 0" />
-	  <mass value="5.5"/>
-	  <inertia ixx="0.03069" ixy="0" ixz="0" iyy="0.03069" iyz="0" izz="0.0176"/>
-	</inertial>
+      <inertial>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
+        <mass value="5.5"/>
+        <inertia ixx="0.03069" ixy="0" ixz="0" iyy="0.03069" iyz="0" izz="0.0176"/>
+      </inertial>
     </link>
-
-    <link name="J2_link">
-      <visual>
-        <origin xyz="-${l_1} 0 ${mz_2 - l_base}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j2.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-	<material name="FANUC_White"/>
-      </visual>
-      <collision>
-        <origin xyz="-${l_1} 0 ${mz_2 - l_base}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j2.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-      </collision>
-	<inertial>
-	  <origin xyz="0 0 0" rpy="1.5708 0 0" />
-	  <mass value="12.1"/>
-	  <inertia ixx="0.06448" ixy="0" ixz="0" iyy="0.06448" iyz="0" izz="0.029645"/>
-	</inertial>
-    </link>
-
-    <link name="J3_link">
-      <visual>
-	<origin xyz="-${l_1} 0 ${mz_3 - l_base - l_2}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j3.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-	<material name="FANUC_White"/>
-      </visual>
-      <collision>
-	<origin xyz="-${l_1} 0 ${mz_3 - l_base - l_2}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j3.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-      </collision>
-	<inertial>
-	  <origin xyz="0 0 0" rpy="1.5708 0 0" />
-	  <mass value="2.8"/>
-	  <inertia ixx="0.00392" ixy="0" ixz="0" iyy="0.00392" iyz="0" izz="0.00252"/>
-	</inertial>
-    </link>
-
-    <link name="J4_link">
-      <visual>
-	<origin xyz="${mx_1 - l_1} 0 ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j4.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-	<material name="FANUC_White"/>
-      </visual>
-      <collision>
-	<origin xyz="${mx_1 - l_1} 0 ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j4.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-      </collision>
-	<inertial>
-	  <origin xyz="0 0 0" rpy="1.5708 0 0" />
-	  <mass value="3.4"/>
-	  <inertia ixx="0.00708" ixy="0" ixz="0" iyy="0.00708" iyz="0" izz="0.00425"/>
-	</inertial>
-    </link>
-
-    <link name="J5_link">
-      <visual>
-	<origin xyz="${mx_1 -l_1 - l_4} ${my_1} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j5.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-	<material name="FANUC_White"/>
-      </visual>
-      <collision>
-	<origin xyz="${mx_1 -l_1 - l_4} ${my_1} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j5.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-      </collision>
-	<inertial>
-	  <origin xyz="0 0 0" rpy="1.5708 0 0" />
-	  <mass value="1.5"/>
-	  <inertia ixx="0.00175" ixy="0" ixz="0" iyy="0.00175" iyz="0" izz="0.001"/>
-	</inertial>
-    </link>
-
-    <link name="J6_link">
-      <visual>
-	<origin xyz="${mx_2 -l_1 - l_4} ${my_1 + l_5} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j6.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-	<material name="FANUC_Black"/>
-      </visual>
-      <collision>
-	<origin xyz="${mx_2 -l_1 - l_4} ${my_1 + l_5} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
-	<geometry>
-	  <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j6.stl" scale="0.001 0.001 0.001"/>
-	</geometry>
-      </collision>
-	<inertial>
-	  <origin xyz="0 0 0" rpy="1.5708 0 0" />
-	  <mass value="0.5"/>
-	  <inertia ixx="0.00029" ixy="0" ixz="0" iyy="0.00029" iyz="0" izz="0.0004"/>
-	</inertial>
-
-    </link>
-
-    <!-- joints -->
     <joint name="J1" type="revolute">
       <origin xyz="0 0 ${l_base}" rpy="0 0 0"/>
       <parent link="base_link"/>
@@ -210,6 +117,27 @@
       <dynamics damping="0.1" friction="0.3"/>
     </joint>
 
+    <!-- J2 link and joint -->
+    <link name="J2_link">
+      <visual>
+        <origin xyz="-${l_1} 0 ${mz_2 - l_base}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="FANUC_White"/>
+      </visual>
+      <collision>
+        <origin xyz="-${l_1} 0 ${mz_2 - l_base}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
+        <mass value="12.1"/>
+        <inertia ixx="0.06448" ixy="0" ixz="0" iyy="0.06448" iyz="0" izz="0.029645"/>
+      </inertial>
+    </link>
     <joint name="J2" type="revolute">
       <origin xyz="${l_1} 0 0" rpy="0 0 0"/>
       <parent link="J1_link"/>
@@ -217,8 +145,29 @@
       <axis xyz="0 1 0"/>
       <limit lower="${j2_l * pi / 180}" upper="${j2_u * pi / 180}" effort="0" velocity="${j2_v * pi / 180}"/>
       <dynamics damping="0.1" friction="0.2"/>
-    </joint>
+    </joint>    
 
+    <!-- J3 link and joint -->
+    <link name="J3_link">
+      <visual>
+        <origin xyz="-${l_1} 0 ${mz_3 - l_base - l_2}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="FANUC_White"/>
+      </visual>
+      <collision>
+        <origin xyz="-${l_1} 0 ${mz_3 - l_base - l_2}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
+        <mass value="2.8"/>
+        <inertia ixx="0.00392" ixy="0" ixz="0" iyy="0.00392" iyz="0" izz="0.00252"/>
+      </inertial>
+    </link>
     <joint name="J3" type="revolute">
       <origin xyz="0 0 ${l_2}" rpy="0 0 0"/>
       <parent link="J2_link"/>
@@ -227,39 +176,94 @@
       <limit lower="${j3_l * pi / 180}" upper="${j3_u * pi / 180}" effort="0" velocity="${j3_v * pi / 180}"/>
     </joint>
 
+    <!-- J4 link and joint -->
+    <link name="J4_link">
+      <visual>
+        <origin xyz="${mx_1 - l_1} 0 ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j4.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="FANUC_White"/>
+      </visual>
+      <collision>
+        <origin xyz="${mx_1 - l_1} 0 ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j4.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
+        <mass value="3.4"/>
+        <inertia ixx="0.00708" ixy="0" ixz="0" iyy="0.00708" iyz="0" izz="0.00425"/>
+      </inertial>
+    </link>
     <joint name="J4" type="revolute">
       <origin xyz="0 0 ${l_3}" rpy="0 0 0"/>
       <parent link="J3_link"/>
       <child link="J4_link"/>
       <axis xyz="-1 0 0"/>
       <limit lower="${j4_l * pi / 180}" upper="${j4_u * pi / 180}" effort="0" velocity="${j4_v * pi / 180}"/>
-    </joint>
+    </joint>    
 
+    <!-- J5 link and joint -->
+    <link name="J5_link">
+      <visual>
+        <origin xyz="${mx_1 -l_1 - l_4} ${my_1} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j5.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="FANUC_White"/>
+      </visual>
+      <collision>
+        <origin xyz="${mx_1 -l_1 - l_4} ${my_1} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j5.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
+        <mass value="1.5"/>
+        <inertia ixx="0.00175" ixy="0" ixz="0" iyy="0.00175" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
     <joint name="J5" type="revolute">
       <origin xyz="${l_4} 0 0" rpy="0 0 0"/>
       <parent link="J4_link"/>
       <child link="J5_link"/>
       <axis xyz="0 -1 0"/>
       <limit lower="${j5_l * pi / 180}" upper="${j5_u * pi / 180}" effort="0" velocity="${j5_v * pi / 180}"/>
-    </joint>
+    </joint>    
 
+    <!-- J6 link and joint -->
+    <link name="J6_link">
+      <visual>
+        <origin xyz="${mx_2 -l_1 - l_4} ${my_1 + l_5} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/visual/j6.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+	      <material name="FANUC_Black"/>
+      </visual>
+      <collision>
+        <origin xyz="${mx_2 -l_1 - l_4} ${my_1 + l_5} ${mz_3 - l_base - l_2 - l_3}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_description)/meshes/crx10ia_l/collision/j6.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="1.5708 0 0" />
+        <mass value="0.5"/>
+        <inertia ixx="0.00029" ixy="0" ixz="0" iyy="0.00029" iyz="0" izz="0.0004"/>
+      </inertial>
+    </link>
     <joint name="J6" type="revolute">
       <origin xyz="0 -${l_5} 0" rpy="0 0 0"/>
       <parent link="J5_link"/>
       <child link="J6_link"/>
       <axis xyz="-1 0 0"/>
       <limit lower="${j6_l * pi / 180}" upper="${j6_u * pi / 180}" effort="0" velocity="${j6_v * pi / 180}"/>
-    </joint>
+    </joint>    
 
-    <!-- world coords -->
-    <link name="wbase" />
-    <joint name="base_link-wbase" type="fixed">
-      <origin xyz="0 0 ${l_base}" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="wbase"/>
-    </joint>
-
-    <!-- flange coords -->
+    <!-- flange link and joint -->
     <link name="flange" />
     <joint name="J6-flange" type="fixed">
       <origin xyz="${l_6} 0 0" rpy="0 0 0" />

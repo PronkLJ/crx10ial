@@ -47,10 +47,9 @@ ros2 run robot_motion_planning move_to_home
 ```
 
 ## To-do
-* Add functionality to the end effector
+* Gazebo + MoveIt control
+* Rewrite control launch file for more flexility
+* load yaml -> xacro.load
+* Add functionality to the end effector (separate package?)
 * Dummy UR robot
-* Gazebo
-
-## Known bugs
-* Gazebo Sim: joints are not receiving enough effort to maintain correct position (might be ROS2 Humble related?)
 

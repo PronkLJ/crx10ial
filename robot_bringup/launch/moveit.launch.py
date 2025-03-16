@@ -1,30 +1,17 @@
 import os
 from launch import LaunchDescription
-from launch.actions import RegisterEventHandler, DeclareLaunchArgument
+from launch.actions import RegisterEventHandler
 from launch_ros.actions import Node
 from launch.event_handlers import OnProcessExit
-from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
 
-    # Argument to load the MoveIt controllers in robot.xacro
-    moveit_only_arg = DeclareLaunchArgument(
-        'moveit_only',
-        default_value='true',
-        description='If true, only MoveIt is launched'
-    )
-
-    moveit_only = LaunchConfiguration('moveit_only')
-
     # Planning Context
     moveit_config=(
         MoveItConfigsBuilder("robot")
-        .robot_description(
-            os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.xacro'),
-            {"moveit_only": moveit_only}               
-        )
+        .robot_description((os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'crx10ia_l.urdf.xacro')))
         .trajectory_execution(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'moveit_controllers.yaml'))
         .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
         .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
@@ -56,6 +43,15 @@ def generate_launch_description():
         ],
     )
 
+    # Statitc Transform Node
+    static_tf = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="static_transform_publisher",
+        output="log",
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
+    )
+
     # Robot State Publisher Node
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -83,21 +79,20 @@ def generate_launch_description():
     )
 
     # Manipulator Controller
-    manipulator_controller = Node(
+    arm_controller = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["manipulator_controller"],
+        arguments=["arm_controller"],
         output="screen",
     )
 
     return LaunchDescription([
-        moveit_only_arg,
-
         rviz_node,
+        static_tf,
         robot_state_publisher,
         ros2_control_node,
         joint_state_controller,
-        manipulator_controller,
+        arm_controller,
 
         RegisterEventHandler(
             OnProcessExit(

@@ -9,6 +9,9 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
+    moveit_dir = os.path.join(get_package_share_directory("robot_moveit_config"))
+
+
     robot_description_content = Command([
         PathJoinSubstitution([FindExecutable(name="xacro")]),
         " ",
@@ -23,7 +26,6 @@ def generate_launch_description():
         parameters=[robot_description],
     )
 
-    # Load controllers
     joint_state_controller = Node(
         package="controller_manager",
         executable="spawner",
@@ -56,7 +58,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             [FindPackageShare("ros_gz_sim"), "/launch", "/gz_sim.launch.py"]),
         launch_arguments={
-            "gz_args": f"-r -v 4 {world}",
+            "gz_args": f"-r {world}",
             "on_exit_shutdown": "True",
         }.items(),
     )
@@ -81,6 +83,39 @@ def generate_launch_description():
         output='screen',
     )  
 
+
+    # Move Group
+    move_group = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                moveit_dir,
+                'launch/move_group.launch.py'))
+    )
+    # Static Virtual Joints
+    static_virtual_joint_tfs = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                moveit_dir,
+                'launch/static_virtual_joint_tfs.launch.py'))
+    )
+    # RViz Node
+    rviz = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                moveit_dir,
+                'launch/moveit_rviz.launch.py'))
+    ) 
+    # Add ros2_control_node for simulation
+    ros2_control = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[os.path.join(moveit_dir,"config","controllers.yaml",)],
+        remappings=[
+            ("/controller_manager/robot_description", "/robot_description"),
+        ],
+        output="both",
+    )
+
     return LaunchDescription([ 
         gazebo,
         spawn_robot,
@@ -88,4 +123,8 @@ def generate_launch_description():
         robot_state_publisher_node,
         joint_state_controller,
         arm_controller,
+        rviz,
+        move_group,
+        static_virtual_joint_tfs,
+        ros2_control,
     ])
