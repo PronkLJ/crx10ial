@@ -49,7 +49,7 @@ ros2 run robot_motion_planning move_to_home
 ## To-do
 * Gazebo + MoveIt control
 * Rewrite control launch file for more flexility
-* load yaml -> xacro.load
+* Reintroduce utils.xacro
 * Add functionality to the end effector (separate package?)
 * Dummy UR robot
 
