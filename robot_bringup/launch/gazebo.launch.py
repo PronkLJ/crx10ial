@@ -16,7 +16,7 @@ def generate_launch_description():
     ])
     robot_description = {"robot_description": robot_description_content}
 
-    robot_state_publisher_node = Node(
+    robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
@@ -74,7 +74,7 @@ def generate_launch_description():
     )
 
     # Bridge topics from Gazebo to ROS2
-    gz_bridge_node = Node(
+    gz_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=["/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock"],
@@ -84,8 +84,8 @@ def generate_launch_description():
     return LaunchDescription([ 
         gazebo,
         spawn_robot,
-        gz_bridge_node,
-        robot_state_publisher_node,
+        gz_bridge,
+        robot_state_publisher,
         joint_state_controller,
         arm_controller,
     ])
