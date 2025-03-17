@@ -47,7 +47,6 @@ ros2 run robot_motion_planning move_to_home
 ```
 
 ## To-do
-* Test functionality of control2.launch.py (if succesful, replace control.launch.py & replace simulation.launch.py with moveit.launch.py)
 * Gazebo + MoveIt control (extend functionality of test(2).launch.py)
 * Merge moveit.ros2_control.xacro and gazebo.ros2_control.xacro into robot.xacro using args
 * Reintroduce utils.xacro

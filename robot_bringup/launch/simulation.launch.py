@@ -1,53 +1,78 @@
 import os
-from ament_index_python import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
+from ament_index_python import get_package_share_directory
+from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
 
     # MoveIt config location
     moveit_dir = os.path.join(get_package_share_directory("robot_moveit_config"))
 
-    # Move Group
-    move_group = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                moveit_dir,
-                'launch/move_group.launch.py'))
+    # Planning Context
+    moveit_config=(
+        MoveItConfigsBuilder("robot")
+        .robot_description(os.path.join(get_package_share_directory('robot_description'), 'urdf', 'robot.moveit.xacro'))
+        .robot_description_semantic(os.path.join(get_package_share_directory("robot_description"), "srdf", "crx10ia_l.srdf"))
+        .trajectory_execution(os.path.join(moveit_dir, 'config', 'moveit_controllers.yaml'))
+        .robot_description_kinematics(os.path.join(moveit_dir, 'config', 'kinematics.yaml'))
+        .joint_limits(os.path.join(moveit_dir, 'config', 'joint_limits.yaml'))
+        .planning_scene_monitor(
+            publish_robot_description=True, 
+            publish_robot_description_semantic=True
+        )
+        .to_moveit_configs()
     )
-    # Robot State Publisher
-    robot_state_publisher = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                moveit_dir,
-                'launch/rsp.launch.py'))
+    
+    # Move Group Node
+    move_group = Node(
+        package="moveit_ros_move_group",
+        executable="move_group",
+        output="screen",
+        parameters=[moveit_config.to_dict()]
     )
-    # Static Virtual Joints
-    static_virtual_joint_tfs = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                moveit_dir,
-                'launch/static_virtual_joint_tfs.launch.py'))
+
+    # Robot State Publisher Node
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name="robot_state_publisher",
+        output="both",
+        parameters=[moveit_config.robot_description],
     )
+
+    # Static Transform Node
+    static_tf = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="static_transform_publisher",
+        output="log",
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
+    )
+
     # RViz Node
-    rviz = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                moveit_dir,
-                'launch/moveit_rviz.launch.py'))
-    ) 
-    # Add ros2_control_node for simulation
+    rviz = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        output="log",
+        arguments=["-d", os.path.join(moveit_dir, 'config', 'moveit.rviz')],
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.robot_description_kinematics,
+        ],
+    )
+
+    # ROS2 Controller Node
+    ros2_controllers_path = os.path.join(moveit_dir, "config", "ros2_controllers.yaml")
     ros2_control = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[os.path.join(moveit_dir,"config","ros2_controllers.yaml",)],
-        remappings=[
-            ("/controller_manager/robot_description", "/robot_description"),
-        ],
+        parameters=[moveit_config.robot_description, ros2_controllers_path],
         output="both",
     )
+
     # Joint State Controllers
     joint_state_controller = Node(
         package="controller_manager",
@@ -55,6 +80,7 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster"],
         output="screen",
     )
+
     # Manipulator Controller
     arm_controller = Node(
         package="controller_manager",
@@ -67,7 +93,7 @@ def generate_launch_description():
         rviz,
         move_group,
         robot_state_publisher,
-        static_virtual_joint_tfs,
+        static_tf,
         ros2_control,
         joint_state_controller,
         arm_controller,
