@@ -2,19 +2,6 @@
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
   <xacro:macro name="crx_robot" params="parent">
 
-    <material name="FANUC_Black">
-      <color rgba="0 0 0 1.0"/>
-    </material>
-    <material name="FANUC_Yellow">
-      <color rgba="1.00 0.84 0.01 1.00"/>
-    </material>
-    <material name="FANUC_Green">
-      <color rgba="0.43 0.68 0.26 1.00"/>
-    </material>
-    <material name="FANUC_White">
-      <color rgba="0.84 0.84 0.82 1.00"/>
-    </material>
-
     <xacro:property name="l_base" value="0.245"/>
     <xacro:property name="l_1" value="0.0"/>
     <xacro:property name="l_2" value="0.710"/>
@@ -74,11 +61,7 @@
           <mesh filename="file://$(find robot_description)/meshes/collision/base.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" rpy="1.5708 0 0" /> 
-        <mass value="10.0"/>
-        <inertia ixx="0.02125" ixy="0" ixz="0" iyy="0.02125" iyz="0" izz="0.0125"/>
-      </inertial>
+      <xacro:cylinder_inertia m="10.0" r="0.05" h="0.1" />
     </link>
     <!-- Link to world -->
     <joint name="base_joint" type="fixed">
@@ -102,11 +85,7 @@
           <mesh filename="file://$(find robot_description)/meshes/collision/j1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" rpy="1.5708 0 0" />
-        <mass value="5.5"/>
-        <inertia ixx="0.03069" ixy="0" ixz="0" iyy="0.03069" iyz="0" izz="0.0176"/>
-      </inertial>
+      <xacro:cylinder_inertia m="5.5" r="0.08" h="0.24" />
     </link>
     <joint name="J1" type="revolute">
       <origin xyz="0 0 ${l_base}" rpy="0 0 0"/>
@@ -132,11 +111,7 @@
           <mesh filename="file://$(find robot_description)/meshes/collision/j2.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" rpy="1.5708 0 0" />
-        <mass value="12.1"/>
-        <inertia ixx="0.06448" ixy="0" ixz="0" iyy="0.06448" iyz="0" izz="0.029645"/>
-      </inertial>
+     <xacro:cylinder_inertia m="12.1" r="0.07" h="0.85" />
     </link>
     <joint name="J2" type="revolute">
       <origin xyz="${l_1} 0 0" rpy="0 0 0"/>
@@ -162,11 +137,7 @@
           <mesh filename="file://$(find robot_description)/meshes/collision/j3.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" rpy="1.5708 0 0" />
-        <mass value="2.8"/>
-        <inertia ixx="0.00392" ixy="0" ixz="0" iyy="0.00392" iyz="0" izz="0.00252"/>
-      </inertial>
+      <xacro:cylinder_inertia m="2.8" r="0.06" h="0.23" />
     </link>
     <joint name="J3" type="revolute">
       <origin xyz="0 0 ${l_2}" rpy="0 0 0"/>
@@ -191,11 +162,7 @@
           <mesh filename="file://$(find robot_description)/meshes/collision/j4.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" rpy="1.5708 0 0" />
-        <mass value="3.4"/>
-        <inertia ixx="0.00708" ixy="0" ixz="0" iyy="0.00708" iyz="0" izz="0.00425"/>
-      </inertial>
+      <xacro:cylinder_inertia m="3.4" r="0.05" h="0.42" />   
     </link>
     <joint name="J4" type="revolute">
       <origin xyz="0 0 ${l_3}" rpy="0 0 0"/>
@@ -220,11 +187,7 @@
           <mesh filename="file://$(find robot_description)/meshes/collision/j5.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" rpy="1.5708 0 0" />
-        <mass value="1.5"/>
-        <inertia ixx="0.00175" ixy="0" ixz="0" iyy="0.00175" iyz="0" izz="0.001"/>
-      </inertial>
+      <xacro:cylinder_inertia m="1.5" r="0.05" h="0.16" />
     </link>
     <joint name="J5" type="revolute">
       <origin xyz="${l_4} 0 0" rpy="0 0 0"/>
@@ -249,11 +212,7 @@
           <mesh filename="file://$(find robot_description)/meshes/collision/j6.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" rpy="1.5708 0 0" />
-        <mass value="0.5"/>
-        <inertia ixx="0.00029" ixy="0" ixz="0" iyy="0.00029" iyz="0" izz="0.0004"/>
-      </inertial>
+      <xacro:cylinder_inertia m="0.5" r="0.04" h="0.06" />
     </link>
     <joint name="J6" type="revolute">
       <origin xyz="0 -${l_5} 0" rpy="0 0 0"/>
