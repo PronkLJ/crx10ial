@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="gazebo_ros2_control" params="
-    plugin_name 
-    initial_positions_file
-    ">
+    <xacro:macro name="gazebo_ros2_control" params="initial_positions_file">
         <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}"/>
         <xacro:property name = "robot_parameters_file" value="$(find robot_description)/config/crx10ia_l.yaml"/>
         <xacro:property name="robot_parameters" value="${xacro.load_yaml(robot_parameters_file)}"/>
 
         <ros2_control name="crx10ia_l" type="system">
             <hardware>
-                <plugin>${plugin_name}</plugin>
+                <plugin>ign_ros2_control/IgnitionSystem</plugin>
             </hardware>
 
             <joint name="J1">

@@ -10,9 +10,10 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
 
     robot_description_content = Command([
-        PathJoinSubstitution([FindExecutable(name="xacro")]),
-        " ",
-        PathJoinSubstitution([FindPackageShare("robot_description"),"urdf","robot.gazebo.xacro",]),
+        PathJoinSubstitution([FindExecutable(name="xacro")]), " ",
+        PathJoinSubstitution([
+            os.path.join(get_package_share_directory("robot_description"), "urdf", "robot.gazebo.xacro"),
+        ]),
     ])
     robot_description = {"robot_description": robot_description_content}
 
