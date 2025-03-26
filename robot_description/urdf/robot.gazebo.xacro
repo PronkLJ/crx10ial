@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="crx10ia_l">
+
+    <!-- Robot model -->
+    <xacro:include filename="$(find robot_description)/urdf/robot.xacro" /> 
+
+    <!-- Gazebo ROS2 Control -->
+    <xacro:include filename="$(find robot_description)/urdf/gazebo.ros2_control.xacro" />
+    <xacro:gazebo_ros2_control
+      plugin_name="ign_ros2_control/IgnitionSystem"
+      initial_positions_file="$(find robot_moveit_config)/config/initial_positions.yaml"
+    />
+</robot>
