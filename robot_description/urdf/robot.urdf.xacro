@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://wiki.ros.org/xacro">
+<robot xmlns:xacro="http://wiki.ros.org/xacro" xmlns="http://www.w3.org/2001/XMLSchema-instance">
   <xacro:macro name="crx_robot" params="parent">
 
     <xacro:property name="l_base" value="0.245"/>
@@ -38,15 +38,7 @@
     <xacro:property name="mx_2" value="0.700"/>
     <xacro:property name="my_1" value="-0.150"/>
 
-    <!-- world coords -->
-    <link name="wbase" />
-    <joint name="base_link-wbase" type="fixed">
-      <origin xyz="0 0 ${l_base}" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="wbase"/>
-    </joint>
-
-    <!-- links -->
+    <!-- Links -->
     <link name="base_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -54,7 +46,7 @@
           <mesh filename="file://$(find robot_description)/meshes/visual/base.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_Black"/>
-            </visual>
+      </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
@@ -68,7 +60,7 @@
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="${parent}"/>
       <child link="base_link" />
-    </joint>
+    </joint>    
 
     <!-- J1 link and joint -->
     <link name="J1_link">
@@ -92,9 +84,9 @@
       <parent link="base_link"/>
       <child link="J1_link"/>
       <axis xyz="0 0 1"/>
-      <limit lower="${j1_l * pi / 180}" upper="${j1_u * pi / 180}" effort="0" velocity="${j1_v * pi / 180}"/>
+      <limit lower="${j1_l * pi / 180}" upper="${j1_u * pi / 180}" effort="1000" velocity="${j1_v * pi / 180}"/>
       <dynamics damping="0.1" friction="0.3"/>
-    </joint>
+    </joint>    
 
     <!-- J2 link and joint -->
     <link name="J2_link">
@@ -118,7 +110,7 @@
       <parent link="J1_link"/>
       <child link="J2_link"/>
       <axis xyz="0 1 0"/>
-      <limit lower="${j2_l * pi / 180}" upper="${j2_u * pi / 180}" effort="0" velocity="${j2_v * pi / 180}"/>
+      <limit lower="${j2_l * pi / 180}" upper="${j2_u * pi / 180}" effort="1000" velocity="${j2_v * pi / 180}"/>
       <dynamics damping="0.1" friction="0.2"/>
     </joint>    
 
@@ -144,7 +136,8 @@
       <parent link="J2_link"/>
       <child link="J3_link"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="${j3_l * pi / 180}" upper="${j3_u * pi / 180}" effort="0" velocity="${j3_v * pi / 180}"/>
+      <limit lower="${j3_l * pi / 180}" upper="${j3_u * pi / 180}" effort="1000" velocity="${j3_v * pi / 180}"/>
+      <dynamics damping="0.1" friction="0.2"/>
     </joint>
 
     <!-- J4 link and joint -->
@@ -169,8 +162,9 @@
       <parent link="J3_link"/>
       <child link="J4_link"/>
       <axis xyz="-1 0 0"/>
-      <limit lower="${j4_l * pi / 180}" upper="${j4_u * pi / 180}" effort="0" velocity="${j4_v * pi / 180}"/>
-    </joint>    
+      <limit lower="${j4_l * pi / 180}" upper="${j4_u * pi / 180}" effort="1000" velocity="${j4_v * pi / 180}"/>
+      <dynamics damping="0.1" friction="0.1"/>
+    </joint>       
 
     <!-- J5 link and joint -->
     <link name="J5_link">
@@ -194,7 +188,8 @@
       <parent link="J4_link"/>
       <child link="J5_link"/>
       <axis xyz="0 -1 0"/>
-      <limit lower="${j5_l * pi / 180}" upper="${j5_u * pi / 180}" effort="0" velocity="${j5_v * pi / 180}"/>
+      <limit lower="${j5_l * pi / 180}" upper="${j5_u * pi / 180}" effort="1000" velocity="${j5_v * pi / 180}"/>
+      <dynamics damping="0.1" friction="0.1"/>
     </joint>    
 
     <!-- J6 link and joint -->
@@ -219,16 +214,20 @@
       <parent link="J5_link"/>
       <child link="J6_link"/>
       <axis xyz="-1 0 0"/>
-      <limit lower="${j6_l * pi / 180}" upper="${j6_u * pi / 180}" effort="0" velocity="${j6_v * pi / 180}"/>
+      <limit lower="${j6_l * pi / 180}" upper="${j6_u * pi / 180}" effort="1000" velocity="${j6_v * pi / 180}"/>
+      <dynamics damping="0.1" friction="0.01"/>
     </joint>    
 
-    <!-- flange link and joint -->
+    <!-- Flange link and joint -->
     <link name="flange" />
     <joint name="J6-flange" type="fixed">
-      <origin xyz="${l_6} 0 0" rpy="0 0 0" />
+      <origin xyz="0.16 0 0" rpy="0 0 0" />
       <parent link="J6_link" />
       <child link="flange" />
     </joint>
+
+    <!-- Add soft gripper to end of arm -->
+    <!-- <xacro:include filename="$(find softgripper_description)/urdf/softgripper.urdf.xacro"/> -->
 
   </xacro:macro>
 </robot>

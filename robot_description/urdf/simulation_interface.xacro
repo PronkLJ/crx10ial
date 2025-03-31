@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<robot name="crx10ial" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="ros2_control" params="initial_positions_file moveit_only">
+        <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}"/>
+        <xacro:property name = "robot_parameters_file" value="$(find robot_description)/config/crx10ia_l.yaml"/>
+        <xacro:property name="robot_parameters" value="${xacro.load_yaml(robot_parameters_file)}"/>
+        
+        <!-- Simulation ros2_control interface -->
+        <ros2_control name="crx10ia_l" type="system">
+            <hardware>
+                <!-- When only MoveIt is loaded, load MoveIt controller -->
+                <xacro:if value="${moveit_only}">
+                    <plugin>mock_components/GenericSystem</plugin>
+                </xacro:if>
+
+                <!-- When Gazebo is also loaded, load Gazebo controllers -->
+                <xacro:unless value="${moveit_only}">
+                    <plugin>ign_ros2_control/IgnitionSystem</plugin>
+                </xacro:unless>
+            </hardware>
+
+            <joint name="J1">
+                <command_interface name="position">
+                    <param name="min">${robot_parameters['j1_limit_min']}</param>
+                    <param name="max">${robot_parameters['j1_limit_max']}</param>
+                </command_interface>
+                <state_interface name="position">
+                <param name="initial_value">${initial_positions['J1']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+                <state_interface name="effort"/>
+            </joint>
+
+            <joint name="J2">
+                <command_interface name="position">
+                    <param name="min">${robot_parameters['j2_limit_min']}</param>
+                    <param name="max">${robot_parameters['j2_limit_max']}</param>
+                </command_interface>               
+                <state_interface name="position">
+                <param name="initial_value">${initial_positions['J2']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+                <state_interface name="effort"/>
+            </joint>
+
+            <joint name="J3">
+                <command_interface name="position">
+                    <param name="min">${robot_parameters['j3_limit_min']}</param>
+                    <param name="max">${robot_parameters['j3_limit_max']}</param>    
+                </command_interface>               
+                <state_interface name="position">
+                <param name="initial_value">${initial_positions['J3']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+                <state_interface name="effort"/>
+            </joint>
+
+            <joint name="J4">
+                <command_interface name="position">
+                    <param name="min">${robot_parameters['j4_limit_min']}</param>
+                    <param name="max">${robot_parameters['j4_limit_max']}</param>
+                </command_interface>          
+                <state_interface name="position">
+                <param name="initial_value">${initial_positions['J4']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+                <state_interface name="effort"/>
+            </joint>
+
+            <joint name="J5">
+                <command_interface name="position">
+                    <param name="min">${robot_parameters['j5_limit_min']}</param>
+                    <param name="max">${robot_parameters['j5_limit_max']}</param> 
+                </command_interface>             
+                <state_interface name="position">
+                <param name="initial_value">${initial_positions['J5']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+                <state_interface name="effort"/>
+            </joint>
+
+            <joint name="J6">
+                <command_interface name="position">
+                    <param name="min">${robot_parameters['j6_limit_min']}</param>
+                    <param name="max">${robot_parameters['j6_limit_max']}</param> 
+                </command_interface>              
+                <state_interface name="position">
+                <param name="initial_value">${initial_positions['J6']}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+                <state_interface name="effort"/>
+            </joint>
+        </ros2_control>
+
+        <!-- Gazebo plugins -->
+        <gazebo reference="world" />
+        <gazebo>
+            <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+                <parameters>$(find robot_moveit_config)/config/ros2_controllers.yaml</parameters>
+            </plugin>
+        </gazebo>
+
+        <!-- Add colours to the robot in Gazebo -->
+        <gazebo reference="base_link">
+            <material>Gazebo/Road</material>
+        </gazebo>
+        <gazebo reference="J1_link">
+            <material>Gazebo/White</material>
+        </gazebo>
+        <gazebo reference="J2_link">
+            <material>Gazebo/White</material>
+        </gazebo>
+        <gazebo reference="J3_link">
+            <material>Gazebo/White</material>
+        </gazebo>
+        <gazebo reference="J4_link">
+            <material>Gazebo/White</material>
+        </gazebo>
+        <gazebo reference="J5_link">
+            <material>Gazebo/White</material>
+        </gazebo>
+        <gazebo reference="J6_link">
+            <material>Gazebo/Road</material>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

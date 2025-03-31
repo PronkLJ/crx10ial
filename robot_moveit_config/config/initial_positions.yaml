@@ -1,4 +1,4 @@
-# Default initial positions for crx10ia_l's ros2_control fake system
+# Default initial positions for crx10ial's ros2_control fake system
 
 initial_positions:
   J1: 0
