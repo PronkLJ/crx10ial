@@ -73,11 +73,39 @@ def generate_launch_description():
         output="log",
         arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"]
     )    
-    
+
+    # ROS2 Controller Node
+    ros2_controllers_path = os.path.join(get_package_share_directory("robot_moveit_config"), "config", "ros2_controllers.yaml")
+    ros2_control = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[moveit_config.robot_description, ros2_controllers_path],
+        output="both",
+    )
+
+    # Joint State Controllers
+    joint_state_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output="screen",
+    )
+
+    # Manipulator Controller
+    arm_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["arm_controller"],
+        output="screen",
+    )
+
     return LaunchDescription([
         moveit_only_arg,
         move_group,
         robot_state_publisher,
         static_tf,
         rviz,
+        ros2_control,
+        joint_state_controller,
+        arm_controller,
     ])
