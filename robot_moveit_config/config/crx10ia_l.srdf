@@ -26,16 +26,18 @@
     <disable_collisions link1="J3_link" link2="J5_link" reason="Never"/>
     <disable_collisions link1="J3_link" link2="J6_link" reason="Never"/>
     <disable_collisions link1="J3_link" link2="base_link" reason="Never"/>
+    <disable_collisions link1="J4_link" link2="J5_link" reason="Adjacent"/>
+    <disable_collisions link1="J4_link" link2="J6_link" reason="Never"/>
+    <disable_collisions link1="J5_link" link2="J6_link" reason="Adjacent"/>
+
+    <!-- Comment out the collissions below if the softgripper is not used -->
     <disable_collisions link1="J3_link" link2="finger_1" reason="Never"/>
     <disable_collisions link1="J3_link" link2="finger_2" reason="Never"/>
     <disable_collisions link1="J3_link" link2="finger_3" reason="Never"/>
     <disable_collisions link1="J3_link" link2="finger_4" reason="Never"/>
     <disable_collisions link1="J3_link" link2="mounting_plate" reason="Never"/>
     <disable_collisions link1="J3_link" link2="quick_changer" reason="Never"/>
-    <disable_collisions link1="J4_link" link2="J5_link" reason="Adjacent"/>
-    <disable_collisions link1="J4_link" link2="J6_link" reason="Never"/>
     <disable_collisions link1="J4_link" link2="quick_changer" reason="Never"/>
-    <disable_collisions link1="J5_link" link2="J6_link" reason="Adjacent"/>
     <disable_collisions link1="J5_link" link2="finger_1" reason="Never"/>
     <disable_collisions link1="J5_link" link2="finger_2" reason="Never"/>
     <disable_collisions link1="J5_link" link2="finger_3" reason="Never"/>

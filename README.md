@@ -3,7 +3,11 @@ The packages in this repository allow for the planning and execution of trajecto
 In combination with the FANUC ROS2 node, these packages can control the physical robot as well.
 
 Tested in ROS2 Humble Hawksbill.
-For physical control of the robot, the robot controller must have ROS 2 Package (S568).
+> [!NOTE]
+> For physical control of the robot, the robot controller must have ROS 2 Package (S568).
+
+> [!NOTE]
+> To include the softgripper fingers, [its repository](https://github.com/PronkLJ/softgripper) also has to be cloned and sourced.
 
 ## Content
 This repository currently includes the following packages:
@@ -21,7 +25,6 @@ git clone https://github.com/PronkLJ/crx10ial
 ```
 
 The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
-To include the softgripper fingers, [its repository](https://github.com/PronkLJ/softgripper) also has to be cloned and sourced.
 
 ## Simulation - main launch file
 ### Launch MoveIt2 + Gazebo for simulation control
