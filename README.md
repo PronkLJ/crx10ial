@@ -21,6 +21,7 @@ git clone https://github.com/PronkLJ/crx10ial
 ```
 
 The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
+To include the softgripper fingers, [its repository](https://github.com/PronkLJ/softgripper) also has to be cloned and sourced.
 
 ## Simulation - main launch file
 ### Launch MoveIt2 + Gazebo for simulation control
