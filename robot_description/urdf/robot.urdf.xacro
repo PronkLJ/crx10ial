@@ -70,7 +70,7 @@
           <mesh filename="file://$(find robot_description)/meshes/visual/j1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="FANUC_White"/>
-            </visual>
+      </visual>
       <collision>
         <origin xyz="0 0 ${mz_1 - l_base}" rpy="0 0 0"/>
         <geometry>

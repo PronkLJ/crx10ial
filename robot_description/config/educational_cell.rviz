@@ -71,6 +71,21 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        front_right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rear_left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rear_right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         table:
           Alpha: 1
           Show Axes: false
@@ -87,7 +102,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: table
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -130,7 +145,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 4.596118927001953
+      Distance: 6.001718521118164
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -145,10 +160,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4803982973098755
+      Pitch: 0.22039803862571716
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.3253982663154602
+      Yaw: 1.0654054880142212
     Saved: ~
 Window Geometry:
   Displays:

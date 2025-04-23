@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<robot name="educational_cell" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- Utils -->
+  <xacro:include filename="$(find robot_description)/urdf/utils.xacro" />
+
+  <!-- Robot model-->
+  <xacro:include filename="$(find robot_description)/urdf/educational_cell.urdf.xacro"/>
+</robot>
