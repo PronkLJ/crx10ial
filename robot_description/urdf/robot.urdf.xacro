@@ -226,8 +226,5 @@
       <child link="flange" />
     </joint>
 
-    <!-- Add soft gripper to end of arm -->
-    <!-- <xacro:include filename="$(find softgripper_description)/urdf/softgripper.urdf.xacro"/> -->
-
   </xacro:macro>
 </robot>
