@@ -52,5 +52,5 @@ ros2 run robot_motion_planning move_to_home
 ```
 
 ## To-do
-- [] Add functionality to the end effector (separate package?)
-- [] Dummy UR/AR4 robot
+- [ ] Dummy UR/AR4 robot
+- [ ] Gazebo environment with 2 different robots
