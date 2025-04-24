@@ -14,7 +14,7 @@ public:
         // Define a collision object for the ground plane
         moveit_msgs::msg::CollisionObject ground_plane;
         ground_plane.id = "ground_plane";
-        ground_plane.header.frame_id = "base_link";
+        ground_plane.header.frame_id = "world";
 
         // Define a box (ground plane)
         shape_msgs::msg::SolidPrimitive primitive;

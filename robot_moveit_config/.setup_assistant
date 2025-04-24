@@ -7,19 +7,4 @@ moveit_setup_assistant_config:
   package_settings:
     author_name: Lucas Pronk
     author_email: l.j.pronk@utwente.nl
-    generated_timestamp: 1742989315
-  control_xacro:
-    command:
-      - position
-    state:
-      - position
-      - velocity
-  modified_urdf:
-    xacros:
-      - control_xacro
-  control_xacro:
-    command:
-      - position
-    state:
-      - position
-      - velocity
+    generated_timestamp: 1745491882
