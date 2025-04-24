@@ -52,6 +52,5 @@ ros2 run robot_motion_planning move_to_home
 ```
 
 ## To-do
-* Add constraints for cobot table
-* Add functionality to the end effector (separate package?)
-* Dummy UR/AR4 robot
+- [] Add functionality to the end effector (separate package?)
+- [] Dummy UR/AR4 robot
