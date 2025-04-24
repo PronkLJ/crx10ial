@@ -4,6 +4,6 @@
   <!-- Utils -->
   <xacro:include filename="$(find robot_description)/urdf/utils.xacro" />
 
-  <!-- Robot model-->
+  <!-- Table model-->
   <xacro:include filename="$(find robot_description)/urdf/educational_cell.urdf.xacro"/>
 </robot>

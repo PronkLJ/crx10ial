@@ -7,10 +7,12 @@
   <!-- Utils -->
   <xacro:include filename="$(find robot_description)/urdf/utils.xacro" />
 
+  <!-- Table model-->
+  <xacro:include filename="$(find robot_description)/urdf/educational_cell.urdf.xacro"/>
+
   <!-- Robot model-->
   <xacro:include filename="$(find robot_description)/urdf/robot.urdf.xacro"/>
-  <link name="world" />
-  <xacro:crx_robot parent="world"/>
+  <xacro:crx_robot parent="table"/>
   
   <!-- Simulation interface -->
   <xacro:include filename="$(find robot_description)/urdf/simulation_interface.xacro"/>

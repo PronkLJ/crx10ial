@@ -36,6 +36,13 @@
         </inertial>
     </link>
 
+    <link name="world"/>
+    <joint name="table_base_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="world"/>
+        <child link="table" />
+      </joint>    
+
     <!-- Reusable wheel+bracket macro -->
     <xacro:macro name="wheel" params="prefix x y">
 
