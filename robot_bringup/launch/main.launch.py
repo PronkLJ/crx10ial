@@ -24,6 +24,13 @@ def generate_launch_description():
         description='Loading Gazebo & MoveIt or just MoveIt in simulation'
     )
 
+    softgripper_arg = DeclareLaunchArgument(
+        name='softgripper', 
+        default_value='false', 
+        choices=['true', 'false'],
+        description='Decide to physically control softgrippers (via Arduino) or not'
+    )
+
     launch_group = GroupAction([
         # Launch MoveIt + Gazebo
         IncludeLaunchDescription(
@@ -52,6 +59,14 @@ def generate_launch_description():
         ),
     ])
 
+    # Node for controlling the softgripper
+    softgripper_controller = Node(
+        package='softgripper_control',
+        executable='softgripper_controller',
+        name='softgripper_controller',
+        condition=IfCondition(LaunchConfiguration('softgripper')),
+    )
+
     # Add ground plane constraint
     ground_plane_node = Node(
         package="robot_motion_planning",
@@ -69,7 +84,9 @@ def generate_launch_description():
     return LaunchDescription([
         sim_arg,
         gazebo_arg,
+        softgripper_arg,
         launch_group,
         ground_plane_node,
+        softgripper_controller,
         #ceiling_plane_node,
     ])
