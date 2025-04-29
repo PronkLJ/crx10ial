@@ -39,11 +39,10 @@ int main(int argc, char **argv) {
 
     // Define multiple target positions
     std::vector<std::tuple<double, double, double, bool>> target_positions = {
-        {0.6, -0.17, 0.7, false},  // Position 1 (Facing forward)
-        {0.5,  0.2,  0.3, true},   // Position 2 (Facing downward)
-        //{0.4, -0.3,  0.75, false}, // Position 3 (Facing forward)
-        //{0.55, 0.1,  0.5, true},   // Position 4 (Facing downward)
-        {0.45, -0.2, 0.65, false}  // Position 5 (Facing forward)
+        // Corrected z (height) by 0.79 because of the table height
+        {0.6, -0.17, 1.49, false},  // Position 1 (Facing forward)
+        {0.5,  0.2,  1.09, true},   // Position 2 (Facing downward)
+        {0.45, -0.2, 1.44, false}   // Position 3 (Facing forward)
     };
 
     for (size_t i = 0; i < target_positions.size(); ++i) {

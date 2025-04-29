@@ -72,7 +72,7 @@ int main (int argc, char **argv) {
   target_pose1.orientation.w = 0.0;
   target_pose1.position.x = 0.6;
   target_pose1.position.y = -0.17;
-  target_pose1.position.z = 0.7;
+  target_pose1.position.z = 1.5;
 
   move_group_arm.setPoseTarget(target_pose1);
   succes_arm = (move_group_arm.plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
