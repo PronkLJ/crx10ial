@@ -7,7 +7,7 @@ from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
-
+    
     # Launch Gazebo Sim
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('robot_bringup'), 'launch', 'gazebo.launch.py')]),
@@ -21,12 +21,13 @@ def generate_launch_description():
         .robot_description_kinematics(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'kinematics.yaml'))
         .joint_limits(os.path.join(get_package_share_directory('robot_moveit_config'), 'config', 'joint_limits.yaml'))
         .planning_scene_monitor(
-            publish_robot_description=True, publish_robot_description_semantic=True
+            publish_robot_description=True, 
+            publish_robot_description_semantic=True
         )
         .to_moveit_configs()
     )
     
-    ##Move Group Node
+    # Move Group Node
     move_group = Node(
         package="moveit_ros_move_group",
         executable="move_group",
@@ -37,7 +38,7 @@ def generate_launch_description():
         ],
     )
 
-    ## RViz Node
+    # RViz Node
     rviz = Node(
         package="rviz2",
         executable="rviz2",
