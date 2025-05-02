@@ -26,6 +26,9 @@ git clone https://github.com/PronkLJ/crx10ial
 
 The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
 
+Make sure that the following are properly installed in the ROS2 environment:
+* MoveIt Humble
+
 ## Simulation - main launch file
 ### Launch MoveIt2 + Gazebo for simulation control
 ```console
