@@ -28,6 +28,8 @@ The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
 
 Make sure that the following are properly installed in the ROS2 environment:
 * MoveIt Humble
+* Gazebo (compatible with Humble)
+* ROS2 control
 
 ## Simulation - main launch file
 ### Launch MoveIt2 + Gazebo for simulation control
