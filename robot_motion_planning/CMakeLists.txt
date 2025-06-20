@@ -58,6 +58,18 @@ ament_target_dependencies(
   "rclcpp"
 )
 
+# Add ur_reaction executable
+add_executable(ur_reaction src/ur_reaction.cpp)
+target_include_directories(ur_reaction PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_features(ur_reaction PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+ament_target_dependencies(
+  ur_reaction
+  "moveit_ros_planning_interface"
+  "rclcpp"
+)
+
 # Add subscribe_and_move executable
 add_executable(subscribe_and_move src/subscribe_and_move.cpp)
 target_include_directories(subscribe_and_move PUBLIC
@@ -77,6 +89,19 @@ target_include_directories(pose_publisher PUBLIC
   $<INSTALL_INTERFACE:include>)
 target_compile_features(pose_publisher PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 ament_target_dependencies(pose_publisher
+  rclcpp
+  std_msgs
+  geometry_msgs
+  moveit_ros_planning_interface
+)
+
+# Add crx_publisher executable
+add_executable(crx_publisher src/crx_publisher.cpp)
+target_include_directories(crx_publisher PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_features(crx_publisher PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+ament_target_dependencies(crx_publisher
   rclcpp
   std_msgs
   geometry_msgs
@@ -119,7 +144,7 @@ ament_target_dependencies(
   "rclcpp"
 )
 
-install(TARGETS add_ground_plane add_ceiling_plane static_move_program dynamic_move_program move_to_home clf_demo object_pickup subscribe_and_move pose_publisher
+install(TARGETS add_ground_plane add_ceiling_plane static_move_program dynamic_move_program move_to_home clf_demo object_pickup subscribe_and_move pose_publisher crx_publisher ur_reaction
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

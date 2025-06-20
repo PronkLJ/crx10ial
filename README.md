@@ -46,15 +46,5 @@ Terminal 2:
 ros2 launch robot_bringup main.launch.py sim:=false
 ```
 
-### Moving the robot
-```console
-ros2 run robot_motion_planning dynamic_move_program [x] [y] [z]
-```
-```console
-ros2 run robot_motion_planning move_to_home
-```
-
 ## To-do
-- [ ] Dummy UR/AR4 robot
-- [ ] Gazebo environment with 2 different robots
 - [ ] Cartesian path planning

@@ -19,7 +19,7 @@ def generate_launch_description():
     
     gazebo_arg = DeclareLaunchArgument(
         name='gazebo', 
-        default_value='true', 
+        default_value='false', 
         choices=['true', 'false'],
         description='Loading Gazebo & MoveIt or just MoveIt in simulation'
     )
