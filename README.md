@@ -2,7 +2,7 @@
 The packages in this repository allow for the planning and execution of trajectory paths for the FANUC CRX10iA/L. 
 In combination with the FANUC ROS2 node, these packages can control the physical robot as well.
 
-Tested in ROS2 Humble Hawksbill.
+Tested in ROS2 Jazzy Jalisco.
 > [!NOTE]
 > For physical control of the robot, the robot controller must have ROS 2 Package (S568).
 
@@ -12,9 +12,8 @@ Tested in ROS2 Humble Hawksbill.
 ## Content
 This repository currently includes the following packages:
 * The robot_description package describes the CRX10iA/L robot.
-* The robot_bringup package includes launch files for the Gazebo and MoveIt simulation & path planning.
-* The robot_motion_planning package contains scripts for trajectory planning and execution of the robot. 
-* The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning 
+* The robot_bringup package includes launch files for simulation & physical control.
+* The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning.
 
 ## Package installation
 
@@ -27,10 +26,10 @@ git clone https://github.com/PronkLJ/crx10ial
 The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
 
 Make sure that the following are properly installed in the ROS2 environment:
-* MoveIt Humble
+* MoveIt (main branch for Jazzy)
 
 ## Simulation - main launch file
-### Launch MoveIt2 + Gazebo for simulation control
+### Launch MoveIt2 for simulation control
 ```console
 ros2 launch robot_bringup main.launch.py sim:=true
 ```
@@ -48,3 +47,5 @@ ros2 launch robot_bringup main.launch.py sim:=false
 
 ## To-do
 - [ ] Cartesian path planning
+- [ ] Re-enable motion control package
+- [ ] Gazebo Harmonic working
