@@ -23,12 +23,6 @@ Moves to a position predefined in the script, mostly used for testing
 ros2 run robot_motion_planning static_move_program
 ```
 
-### static_move_program
-Moves to a position predefined in the script, to then pick up an object.
-```console
-ros2 run robot_motion_planning static_move_program
-```
-
 ## Constraining scripts
 There are two scripts that constrain movement, to ensure movement is valid in the real world.
 Their variables can be adjusted in add_ground_plane.cpp and add_ceiling_plane.cpp.

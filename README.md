@@ -13,6 +13,7 @@ Tested in ROS2 Jazzy Jalisco.
 This repository currently includes the following packages:
 * The robot_description package describes the CRX10iA/L robot.
 * The robot_bringup package includes launch files for simulation & physical control.
+* The robot_motion_planning package contains scripts for trajectory planning and execution of the robot.
 * The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning.
 
 ## Package installation
