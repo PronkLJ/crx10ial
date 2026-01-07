@@ -86,7 +86,7 @@ def generate_launch_description():
         gazebo_arg,
         softgripper_arg,
         launch_group,
-        #ground_plane_node,
+        ground_plane_node,
         softgripper_controller,
         #ceiling_plane_node,
     ])
