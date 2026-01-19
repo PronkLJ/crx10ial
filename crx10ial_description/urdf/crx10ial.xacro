@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="crx10ial" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- Utils -->
+  <xacro:include filename="$(find crx10ial_description)/urdf/utils.xacro" />
+
+  <!-- Robot model-->
+  <xacro:include filename="$(find crx10ial_description)/urdf/crx10ial.urdf.xacro"/>
+  <link name="world"/>
+  <xacro:crx10ial parent="world"/>
+  
+</robot>
