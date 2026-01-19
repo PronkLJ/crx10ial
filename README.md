@@ -6,15 +6,11 @@ Tested in ROS2 Jazzy Jalisco.
 > [!NOTE]
 > For physical control of the robot, the robot controller must have ROS 2 Package (S568).
 
-> [!NOTE]
-> To include the softgripper fingers, [its repository](https://github.com/PronkLJ/softgripper) also has to be cloned and sourced.
-
 ## Content
 This repository currently includes the following packages:
-* The robot_description package describes the CRX10iA/L robot.
-* The robot_bringup package includes launch files for simulation & physical control.
-* The robot_motion_planning package contains scripts for trajectory planning and execution of the robot.
-* The robot_moveit_config package holds all the configuration files that are used for MoveIt path planning.
+* The crx10ial_description package describes the CRX10iA/L robot.
+* The crx10ial_bringup package includes launch files for simulation & physical control.
+* The crx10ial_moveit_config package holds all the configuration and launch files that are used for MoveIt path planning.
 
 ## Package installation
 
@@ -29,24 +25,23 @@ The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
 Make sure that the following are properly installed in the ROS2 environment:
 * MoveIt (main branch for Jazzy)
 
-## Simulation - main launch file
+## Simulation control
 ### Launch MoveIt2 for simulation control
 ```console
-ros2 launch robot_bringup main.launch.py sim:=true
+ros2 launch crx10ial_bringup simulation.launch.py
 ```
 
 ## Physical control
 ### Launch FANUC ROS interface and MoveIt2 for physical control
 Terminal 1:
 ```console
-ros2 launch fanuc_ros2_driver fanuc_interface.launch.py robot_type:="crx10ia_l" robot_ip:="[IP address]" 
+ros2 launch crx10ial_bringup hardware_interface.launch.py robot_ip:="[IP address]" 
 ```
 Terminal 2:
 ```console
-ros2 launch robot_bringup main.launch.py sim:=false
+ros2 launch crx10ial_bringup control.launch.py
 ```
 
 ## To-do
-- [ ] Cartesian path planning
 - [ ] Re-enable motion control package
-- [ ] Gazebo Harmonic working
+- [ ] Cartesian path planning through scripting
