@@ -17,21 +17,31 @@ This repository currently includes the following packages:
 To install the packages from inside your workspace:
 ```console
 cd src
-git clone https://github.com/IdPDE/...
+git clone https://github.com/PronkLJ/crx10ial
 ```
-Example:
+
+The FANUC ROS2 drivers for the hardware interface are supplied by FANUC.
+
 Make sure that the following are properly installed in the ROS2 environment:
 * MoveIt (main branch for Jazzy)
 
-## Execution of the project
-Here, you can add descriptions on how users can run the program/project.
-For example:
+## Simulation control
 ### Launch MoveIt2 for simulation control
 ```console
 ros2 launch crx10ial_bringup simulation.launch.py
 ```
 
+## Physical control
+### Launch FANUC ROS interface and MoveIt2 for physical control
+Terminal 1:
+```console
+ros2 launch crx10ial_bringup hardware_interface.launch.py robot_ip:="[IP address]" 
+```
+Terminal 2:
+```console
+ros2 launch crx10ial_bringup control.launch.py
+```
+
 ## To-do
-- [ ] First thing I still want to do
-- [ ] Second thing I still want to do
-- [x] A thing I finished doing
+- [ ] Re-enable motion control package
+- [ ] Cartesian path planning through scripting
