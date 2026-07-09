@@ -6,7 +6,7 @@ from ament_index_python import get_package_share_directory
 
 def generate_launch_description():
 
-    moveit_share_dir = get_package_share_directory("robot_moveit_config")
+    moveit_share_dir = get_package_share_directory("crx10ial_moveit_config")
 
     move_group = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
