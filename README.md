@@ -45,3 +45,4 @@ ros2 launch crx10ial_bringup control.launch.py
 ## To-do
 - [ ] Re-enable motion control package
 - [ ] Cartesian path planning through scripting
+- [ ] Integrate with 2FG7 gripper
